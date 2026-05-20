@@ -1,0 +1,59 @@
+# =========================================================
+# Données — NE JAMAIS COMMITER
+# =========================================================
+data/
+*.csv
+*.xlsx
+*.xls
+*.parquet
+*.db
+*.sqlite
+*.duckdb
+
+# Modèles ML sauvegardés (souvent volumineux)
+*.pkl
+*.joblib
+*.h5
+*.onnx
+
+# Fichiers Power BI (volumineux, peuvent contenir des données)
+*.pbix
+
+# =========================================================
+# Environnements et caches Python
+# =========================================================
+venv/
+env/
+.venv/
+__pycache__/
+*.py[cod]
+*$py.class
+.ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# =========================================================
+# Fichiers d'environnement et secrets
+# =========================================================
+.env
+.env.local
+*.secret
+credentials.json
+
+# =========================================================
+# IDE / Système
+# =========================================================
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# =========================================================
+# Logs et sorties
+# =========================================================
+*.log
+logs/
+mlruns/
+outputs/
