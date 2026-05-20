@@ -1,5 +1,10 @@
 # Projet Intégré — Analyse et Prédiction du Churn Client
 
+> **École** : ESPRIT School of Business
+> **Programme** : Master 1 — Business Analytics (M1 BA)
+> **Tuteur du projet** : Aymen Ben Brik
+> **Année** : 2026
+
 ## 1. Contexte
 
 Une institution bancaire met à votre disposition un jeu de données réel et anonymisé décrivant ses clients, leurs comptes et leurs produits. La fidélisation client (lutte contre l'attrition, ou *churn*) est un enjeu majeur du secteur : acquérir un nouveau client coûte plusieurs fois plus cher que d'en conserver un existant.

@@ -1,5 +1,10 @@
 # Projet Intégré — Analyse et Prédiction du Churn Client
 
+> **École** : ESPRIT School of Business
+> **Programme** : Master 1 — Business Analytics (M1 BA)
+> **Tuteur du projet** : Aymen Ben Brik
+> **Année** : 2026
+
 Bienvenue. Ce dossier contient l'ensemble des supports nécessaires pour réaliser le projet.
 
 ## Par où commencer
@@ -69,6 +74,6 @@ pip install -r requirements.txt
 | _À compléter_ | _À compléter_ | _À compléter_ |
 | _À compléter_ | _À compléter_ | _À compléter_ |
 
-## Contact encadrant
+## Contact tuteur
 
-À compléter par l'encadrant.
+Aymen Ben Brik — _coordonnées à compléter par le tuteur_.
