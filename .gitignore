@@ -5,10 +5,12 @@
 *.csv
 *.xlsx
 *.xls
+*.txt
 *.parquet
 *.db
 *.sqlite
 *.duckdb
+
 
 # ...mais on autorise explicitement le dataset anonymisé fourni
 # avec le projet (via Git LFS — voir .gitattributes).
