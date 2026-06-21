@@ -1,0 +1,428 @@
+\documentclass[11pt,a4paper]{article}
+
+% ================ Encodage et langue ================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{lmodern}
+\usepackage{textcomp}
+
+% ================ Mise en page ================
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{parskip}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+
+% ================ Couleurs et liens ================
+\usepackage[table]{xcolor}
+\definecolor{primary}{HTML}{0B5394}
+\definecolor{accent}{HTML}{1F77B4}
+\definecolor{light}{HTML}{F2F2F2}
+\definecolor{codebg}{HTML}{F6F8FA}
+\definecolor{rulec}{HTML}{D0D7DE}
+
+\usepackage[colorlinks=true, linkcolor=primary, urlcolor=primary, citecolor=primary]{hyperref}
+
+% ================ Tableaux ================
+\usepackage{longtable, booktabs, array, tabularx}
+\renewcommand{\arraystretch}{1.25}
+\arrayrulecolor{rulec}
+
+% ================ Listes ================
+\usepackage{enumitem}
+\setlist{itemsep=2pt, topsep=4pt}
+
+% ================ Code et citations ================
+\usepackage{fancyvrb}
+\usepackage{framed}
+\definecolor{shadecolor}{named}{light}
+
+% Encadrés pour les blocs > (quotes)
+\usepackage{mdframed}
+\newmdenv[
+  linecolor=primary,
+  linewidth=2pt,
+  topline=false, bottomline=false, rightline=false,
+  innerleftmargin=10pt, innerrightmargin=8pt,
+  innertopmargin=6pt, innerbottommargin=6pt,
+  backgroundcolor=codebg,
+  skipabove=8pt, skipbelow=8pt
+]{quotebox}
+\renewenvironment{quote}{\begin{quotebox}}{\end{quotebox}}
+
+% ================ Titres ================
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primary}}{\thesection.}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{accent}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection}{0.6em}{}
+
+% ================ En-têtes et pieds de page ================
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{gray}ESPRIT School of Business --- M1 BA --- Projet Intégré}
+\fancyhead[R]{\small\color{gray}\nouppercase{\leftmark}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% ================ Pandoc helpers ================
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\passthrough}[1]{#1}
+
+\usepackage{calc}
+\providecommand{\real}[1]{#1}
+
+
+% ================ Métadonnées ================
+\title{\color{primary}\textbf{Timeline du Projet --- 4 Semaines}}
+\author{Aymen Ben Brik}
+\date{2026}
+
+\begin{document}
+
+\begin{titlepage}
+\centering
+\vspace*{1.5cm}
+
+{\Large\bfseries ESPRIT School of Business}\\[0.3cm]
+{\large Master 1 --- Business Analytics (M1 BA)}\\[2cm]
+
+{\color{gray}\large Projet Intégré}\\[0.3cm]
+{\color{gray}\large Analyse et Prédiction du Churn Client}\\[2.2cm]
+
+\rule{0.85\linewidth}{1.2pt}\\[0.6cm]
+{\Huge\bfseries\color{primary} Timeline du Projet --- 4 Semaines\par}
+\rule{0.85\linewidth}{1.2pt}\\[2cm]
+
+{\large Tuteur du projet}\\[0.2cm]
+{\Large\bfseries Aymen Ben Brik}\\[1cm]
+{\large 2026}
+
+\vfill
+{\color{gray}\small Document à destination des étudiants}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section{Timeline du Projet --- 4
+Semaines}\label{timeline-du-projet-4-semaines}
+
+La durée totale du projet est de \textbf{4 semaines (28 jours)}. Le
+planning ci-dessous est indicatif : adaptez-le à la composition et à la
+disponibilité de votre équipe, mais respectez les jalons hebdomadaires
+qui correspondent aux points de suivi avec l'encadrant.
+
+\subsection{Vue d'ensemble}\label{vue-densemble}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Semaine
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Phase
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Objectif principal
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Livrable de fin de semaine
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{S1} & Cadrage \& Exploration & Comprendre les données, mettre en
+place l'environnement et l'ETL & Pipeline ETL fonctionnel + rapport
+d'exploration \\
+\textbf{S2} & BI \& Power BI & Modélisation dimensionnelle et tableaux
+de bord & Data Warehouse + rapports Power BI \\
+\textbf{S3} & Machine Learning & Entraînement et évaluation des modèles
+de churn & Modèle sauvegardé + notebook d'analyse \\
+\textbf{S4} & Web \& Livraison & Application web, déploiement, rapport,
+présentation & Démo en ligne + rapport PDF + présentation \\
+\end{longtable}
+}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Semaine 1 --- Cadrage et Exploration (J1 →
+J7)}\label{semaine-1-cadrage-et-exploration-j1-j7}
+
+\subsubsection{Objectifs}\label{objectifs}
+
+\begin{itemize}
+\tightlist
+\item
+  Constituer l'équipe et définir les rôles.
+\item
+  Comprendre le contexte métier et la définition du churn.
+\item
+  Profiler les données et identifier les problèmes de qualité.
+\item
+  Concevoir et implémenter le pipeline ETL.
+\end{itemize}
+
+\subsubsection{Jour par jour}\label{jour-par-jour}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Jour
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Activité
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+J1 & Lecture des documents du projet, répartition des rôles, création du
+dépôt GitHub, mise en place de l'environnement (Python, venv,
+dépendances). \\
+J2 & Exploration des fichiers : volumétrie, types, valeurs manquantes,
+distributions. Premier notebook d'EDA (Exploratory Data Analysis). \\
+J3 & Analyse des tables de dimensions, étude des codes et libellés,
+recensement des incohérences. \\
+J4 & Définition formelle de la variable cible (churn), justification du
+choix. Liste des features candidates. \\
+J5 & Conception du pipeline ETL : sources, transformations, cibles.
+Diagramme. \\
+J6 & Implémentation du pipeline ETL (extraction + nettoyage +
+jointures). \\
+J7 & Chargement vers la base de données analytique. Tests de cohérence.
+\textbf{Jalon S1.} \\
+\end{longtable}
+}
+
+\subsubsection{Livrable de la semaine}\label{livrable-de-la-semaine}
+
+\begin{itemize}
+\tightlist
+\item
+  Dépôt GitHub initialisé avec README, structure de dossiers,
+  \texttt{.gitignore}.
+\item
+  Notebook d'exploration documenté.
+\item
+  Pipeline ETL exécutable et reproductible.
+\item
+  Schéma de l'architecture cible (data flow).
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Semaine 2 --- BI et Power BI (J8 →
+J14)}\label{semaine-2-bi-et-power-bi-j8-j14}
+
+\subsubsection{Objectifs}\label{objectifs-1}
+
+\begin{itemize}
+\tightlist
+\item
+  Concevoir un modèle dimensionnel en étoile.
+\item
+  Définir et calculer les KPIs métier.
+\item
+  Produire les rapports Power BI.
+\end{itemize}
+
+\subsubsection{Jour par jour}\label{jour-par-jour-1}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Jour
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Activité
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+J8 & Conception du modèle dimensionnel : table de faits, dimensions,
+granularité. \\
+J9 & Création des tables dimensionnelles et de la table de faits dans le
+Data Warehouse. \\
+J10 & Définition des KPIs : taux de churn global, par segment, par
+ancienneté, par produit, etc. \\
+J11 & Connexion de Power BI à la source de données. Préparation des
+mesures DAX. \\
+J12 & Construction du rapport Power BI --- page 1 (vue d'ensemble). \\
+J13 & Construction du rapport Power BI --- pages d'analyse
+(segmentation, churn, produits). \\
+J14 & Mise au point graphique, interactivité, publication. \textbf{Jalon
+S2.} \\
+\end{longtable}
+}
+
+\subsubsection{Livrable de la semaine}\label{livrable-de-la-semaine-1}
+
+\begin{itemize}
+\tightlist
+\item
+  Schéma dimensionnel documenté.
+\item
+  Data Warehouse peuplé.
+\item
+  Fichier \texttt{.pbix} (ou lien Power BI Service) avec au minimum 3
+  pages d'analyse.
+\item
+  Liste des KPIs documentée dans le dépôt.
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Semaine 3 --- Machine Learning (J15 →
+J21)}\label{semaine-3-machine-learning-j15-j21}
+
+\subsubsection{Objectifs}\label{objectifs-2}
+
+\begin{itemize}
+\tightlist
+\item
+  Préparer le jeu de données ML.
+\item
+  Entraîner et comparer plusieurs modèles.
+\item
+  Choisir et sauvegarder le modèle final.
+\end{itemize}
+
+\subsubsection{Jour par jour}\label{jour-par-jour-2}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Jour
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Activité
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+J15 & Préparation du dataset ML depuis le DWH : sélection des features,
+encodage, traitement du déséquilibre. \\
+J16 & Split train/test, baseline (régression logistique). Premières
+métriques. \\
+J17 & Entraînement de modèles avancés (Random Forest, XGBoost,
+LightGBM). Comparaison. \\
+J18 & Optimisation des hyperparamètres (Grid Search ou Optuna) pour le
+meilleur candidat. \\
+J19 & Évaluation finale : accuracy, precision, recall, F1, ROC-AUC,
+matrice de confusion. \\
+J20 & Interprétabilité : importance des features, SHAP values. \\
+J21 & Sauvegarde du modèle (\texttt{.pkl} ou \texttt{.joblib}).
+Documentation des choix. \textbf{Jalon S3.} \\
+\end{longtable}
+}
+
+\subsubsection{Livrable de la semaine}\label{livrable-de-la-semaine-2}
+
+\begin{itemize}
+\tightlist
+\item
+  Notebook ML complet (préparation → entraînement → évaluation →
+  interprétation).
+\item
+  Modèle sauvegardé.
+\item
+  Tableau comparatif des modèles testés.
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Semaine 4 --- Interface Web, Déploiement, Livraison (J22 →
+J28)}\label{semaine-4-interface-web-duxe9ploiement-livraison-j22-j28}
+
+\subsubsection{Objectifs}\label{objectifs-3}
+
+\begin{itemize}
+\tightlist
+\item
+  Construire et déployer l'application web.
+\item
+  Finaliser le rapport et la présentation.
+\end{itemize}
+
+\subsubsection{Jour par jour}\label{jour-par-jour-3}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Jour
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Activité
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+J22 & Maquette de l'application web. Choix de la stack (Streamlit /
+Flask / FastAPI + frontend). \\
+J23 & Développement --- chargement du modèle, formulaire de prédiction
+client. \\
+J24 & Développement --- page ``comptes à risque'' + KPIs de synthèse. \\
+J25 & Déploiement sur une plateforme cloud (Streamlit Cloud, Render,
+Hugging Face Spaces, Railway, etc.). Tests. \\
+J26 & Rédaction du rapport PDF (toutes les parties). \\
+J27 & Préparation de la présentation (slides + script +
+démonstration). \\
+J28 & Répétition de la présentation. Finalisation du dépôt GitHub.
+\textbf{Soutenance finale.} \\
+\end{longtable}
+}
+
+\subsubsection{Livrable final}\label{livrable-final}
+
+\begin{itemize}
+\tightlist
+\item
+  Application web accessible en ligne via une URL publique.
+\item
+  Dépôt GitHub finalisé avec README détaillé (instructions, captures
+  d'écran, lien démo).
+\item
+  Rapport PDF (25--40 pages).
+\item
+  Slides de présentation.
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Recommandations
+transverses}\label{recommandations-transverses}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Commits réguliers} : chaque membre commit au moins
+  quotidiennement sur sa branche.
+\item
+  \textbf{Branches Git} : utilisez \texttt{main} pour le code stable et
+  des branches \texttt{feature/...} par tâche.
+\item
+  \textbf{Documentation au fil de l'eau} : ne laissez pas la rédaction
+  du rapport pour la dernière semaine. Rédigez les sections au fur et à
+  mesure que vous terminez les phases.
+\item
+  \textbf{Tests} : prévoyez du temps de buffer en fin de semaine 4 ---
+  déployer pour la première fois prend souvent plus de temps que prévu.
+\end{itemize}
+
+\end{document}

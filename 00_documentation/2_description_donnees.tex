@@ -1,0 +1,393 @@
+\documentclass[11pt,a4paper]{article}
+
+% ================ Encodage et langue ================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{lmodern}
+\usepackage{textcomp}
+
+% ================ Mise en page ================
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{parskip}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+
+% ================ Couleurs et liens ================
+\usepackage[table]{xcolor}
+\definecolor{primary}{HTML}{0B5394}
+\definecolor{accent}{HTML}{1F77B4}
+\definecolor{light}{HTML}{F2F2F2}
+\definecolor{codebg}{HTML}{F6F8FA}
+\definecolor{rulec}{HTML}{D0D7DE}
+
+\usepackage[colorlinks=true, linkcolor=primary, urlcolor=primary, citecolor=primary]{hyperref}
+
+% ================ Tableaux ================
+\usepackage{longtable, booktabs, array, tabularx}
+\renewcommand{\arraystretch}{1.25}
+\arrayrulecolor{rulec}
+
+% ================ Listes ================
+\usepackage{enumitem}
+\setlist{itemsep=2pt, topsep=4pt}
+
+% ================ Code et citations ================
+\usepackage{fancyvrb}
+\usepackage{framed}
+\definecolor{shadecolor}{named}{light}
+
+% Encadrés pour les blocs > (quotes)
+\usepackage{mdframed}
+\newmdenv[
+  linecolor=primary,
+  linewidth=2pt,
+  topline=false, bottomline=false, rightline=false,
+  innerleftmargin=10pt, innerrightmargin=8pt,
+  innertopmargin=6pt, innerbottommargin=6pt,
+  backgroundcolor=codebg,
+  skipabove=8pt, skipbelow=8pt
+]{quotebox}
+\renewenvironment{quote}{\begin{quotebox}}{\end{quotebox}}
+
+% ================ Titres ================
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primary}}{\thesection.}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{accent}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection}{0.6em}{}
+
+% ================ En-têtes et pieds de page ================
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{gray}ESPRIT School of Business --- M1 BA --- Projet Intégré}
+\fancyhead[R]{\small\color{gray}\nouppercase{\leftmark}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% ================ Pandoc helpers ================
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\passthrough}[1]{#1}
+
+\usepackage{calc}
+\providecommand{\real}[1]{#1}
+
+
+% ================ Métadonnées ================
+\title{\color{primary}\textbf{Description des Données}}
+\author{Aymen Ben Brik}
+\date{2026}
+
+\begin{document}
+
+\begin{titlepage}
+\centering
+\vspace*{1.5cm}
+
+{\Large\bfseries ESPRIT School of Business}\\[0.3cm]
+{\large Master 1 --- Business Analytics (M1 BA)}\\[2cm]
+
+{\color{gray}\large Projet Intégré}\\[0.3cm]
+{\color{gray}\large Analyse et Prédiction du Churn Client}\\[2.2cm]
+
+\rule{0.85\linewidth}{1.2pt}\\[0.6cm]
+{\Huge\bfseries\color{primary} Description des Données\par}
+\rule{0.85\linewidth}{1.2pt}\\[2cm]
+
+{\large Tuteur du projet}\\[0.2cm]
+{\Large\bfseries Aymen Ben Brik}\\[1cm]
+{\large 2026}
+
+\vfill
+{\color{gray}\small Document à destination des étudiants}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section{Description des Données}\label{description-des-donnuxe9es}
+
+Les données mises à votre disposition proviennent du système
+d'information d'une institution bancaire. Elles ont été
+\textbf{anonymisées} : aucun identifiant personnel direct n'est
+exploitable, mais elles conservent leur structure et leur cohérence
+métier réelle.
+
+\subsection{1. Vue d'ensemble}\label{vue-densemble}
+
+Le jeu de données est composé de :
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{1 fichier de données principal} au format CSV
+  (\textasciitilde130 Mo, plusieurs centaines de milliers de lignes)
+  contenant les informations clients, comptes et produits.
+\item
+  \textbf{8 tables de dimensions} au format Excel (\texttt{.xlsx}) qui
+  donnent le libellé descriptif associé aux codes présents dans le
+  fichier principal.
+\end{itemize}
+
+Chaque ligne du fichier principal correspond à un \textbf{couple
+(client, compte produit)} : un même client peut donc apparaître
+plusieurs fois s'il possède plusieurs comptes.
+
+\subsection{2. Fichier principal --- Description des
+colonnes}\label{fichier-principal-description-des-colonnes}
+
+\subsubsection{2.1 Identifiants}\label{identifiants}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}lll@{}}
+\toprule\noalign{}
+Colonne & Type & Description \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{CUSTOMER\_NO} & Numérique & Identifiant unique du client \\
+\texttt{ACCOUNT\_NO} & Numérique & Identifiant unique du compte \\
+\texttt{BRANCH} & Code & Agence de rattachement \\
+\end{longtable}
+}
+
+\subsubsection{2.2 Informations client}\label{informations-client}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Colonne
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Type
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Description
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{NATIONALITY} & Code ISO & Nationalité du client \\
+\texttt{RESIDENCE} & Code ISO & Pays de résidence \\
+\texttt{MARITAL\_STATUS} & Code & Statut marital (C = célibataire, M =
+marié(e), D = divorcé(e), V = veuf/veuve) \\
+\texttt{DATE\_OF\_BIRTH} & Date (YYYYMMDD) & Date de naissance \\
+\texttt{CUST\_OPENING\_DATE} & Date (YYYYMMDD) & Date d'entrée en
+relation avec la banque \\
+\texttt{NATURE\_CLIENT} & Code & Type de client (personne physique,
+personne morale, etc.) \\
+\texttt{PARTYCLASS} & Code & Classification commerciale (Retail,
+Corporate, etc.) \\
+\texttt{LOB} & Code & Ligne métier (Line of Business) \\
+\texttt{SCORE\_KYC} & Code & Score de connaissance client (Know Your
+Customer) \\
+\texttt{COMPLETED\_FILE} & Booléen (YES/NO) & Dossier client complet \\
+\texttt{LAST\_REVIEW\_DATE} & Date & Date de dernière revue du
+dossier \\
+\texttt{NEXT\_\_REVIEW\_DATE} & Date & Date de prochaine revue prévue \\
+\texttt{INDUSTRY} & Code & Secteur d'activité du client (FK vers
+\texttt{dim\_INDUSTRY}) \\
+\texttt{SALARY} & Numérique & Salaire ou revenu déclaré \\
+\end{longtable}
+}
+
+\subsubsection{2.3 Informations compte}\label{informations-compte}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Colonne
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Type
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Description
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{ACCOUNT\_STATUS} & Texte & Statut du compte (\texttt{Active},
+\texttt{Closed}, etc.) --- \textbf{variable cible pour le churn} \\
+\texttt{ACCT\_OPENING\_DATE} & Date & Date d'ouverture du compte \\
+\texttt{ACCT\_CLOSE\_DATE} & Date & Date de clôture du compte (si
+applicable) \\
+\texttt{ACCOUNT\_CATEGORY} & Code & Catégorie du compte (FK vers
+\texttt{dim\_CATEGORY.ACCOUNT}) \\
+\texttt{ACCOUNT\_TYPE\_DESC} & Texte & Description du type de compte \\
+\texttt{CURRENCY} & Code ISO & Devise du compte (FK vers
+\texttt{dim\_CURRENCY}) \\
+\texttt{CLOSURE\_REASON} & Code & Motif de clôture (FK vers
+\texttt{dim\_Closure\_reason}) \\
+\texttt{ACCT\_BALANCE} & Numérique & Solde du compte \\
+\end{longtable}
+}
+
+\subsubsection{2.4 Informations produit}\label{informations-produit}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}lll@{}}
+\toprule\noalign{}
+Colonne & Type & Description \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{PRODUCT\_GROUP} & Code & Groupe de produits \\
+\texttt{PRODUCT\_LINE} & Code & Ligne de produits \\
+\texttt{PRODUCT} & Code & Produit spécifique \\
+\texttt{ACCOUNTNATURE} & Texte & Nature du produit \\
+\texttt{STARTDATE} & Date & Date de début du produit \\
+\texttt{MATURITYDATE} & Date & Date d'échéance \\
+\texttt{AMOUNT} & Numérique & Montant du produit (crédit, dépôt,
+etc.) \\
+\texttt{FIXEDRATE} & Numérique & Taux fixe associé \\
+\texttt{PRODUCT\_STATUS} & Texte & Statut du produit \\
+\end{longtable}
+}
+
+\subsection{3. Tables de dimensions}\label{tables-de-dimensions}
+
+Les fichiers \texttt{dim\_*.xlsx} fournissent les libellés descriptifs
+associés aux codes du fichier principal. Elles sont à utiliser pour
+enrichir les données lors de la phase ETL.
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Fichier
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Clé
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Contenu
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{dim\_CATEGORY.ACCOUNT.xlsx} & \texttt{CATEGORY\_id} &
+Description des catégories de compte \\
+\texttt{dim\_CURRENCY.xlsx} & Code devise & Description des devises \\
+\texttt{dim\_Closure\_reason.xlsx} & \texttt{RECID} & Motifs de clôture
+de compte \\
+\texttt{dim\_DAO.xlsx} & Code & Référentiel DAO \\
+\texttt{dim\_INDUSTRY.xlsx} & \texttt{INDUSTRY\_CODE} & Secteurs
+d'activité économique \\
+\texttt{dim\_SECTOR.xlsx} & Code & Secteurs détaillés \\
+\texttt{dim\_TARGET.xlsx} & Code & Segmentation cible client \\
+\texttt{dim\_TRANSACTION.xlsx} & Code & Référentiel de types de
+transactions \\
+\end{longtable}
+}
+
+\subsection{4. Définition de la variable cible
+(churn)}\label{duxe9finition-de-la-variable-cible-churn}
+
+Le \textbf{churn} se définit ici comme la \textbf{clôture d'un compte
+client}. La variable cible peut être construite à partir de la colonne
+\texttt{ACCOUNT\_STATUS} :
+
+\begin{verbatim}
+churn = 1  si  ACCOUNT_STATUS contient "Closed"
+churn = 0  sinon
+\end{verbatim}
+
+Vous pouvez aussi proposer une définition plus fine (par exemple : churn
+d'un client = clôture de \textbf{tous} ses comptes), à justifier dans le
+rapport.
+
+\subsection{5. Variables potentiellement intéressantes pour le
+ML}\label{variables-potentiellement-intuxe9ressantes-pour-le-ml}
+
+Quelques pistes (non exhaustives) à explorer :
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Variables démographiques} : âge (à calculer depuis
+  \texttt{DATE\_OF\_BIRTH}), statut marital, nationalité.
+\item
+  \textbf{Variables d'ancienneté} : ancienneté du client
+  (\texttt{CUST\_OPENING\_DATE}), ancienneté du compte
+  (\texttt{ACCT\_OPENING\_DATE}).
+\item
+  \textbf{Variables financières} : solde (\texttt{ACCT\_BALANCE}),
+  salaire (\texttt{SALARY}), montant du produit (\texttt{AMOUNT}).
+\item
+  \textbf{Variables comportementales} : nombre de comptes par client,
+  diversité des produits détenus, secteur d'activité, segment
+  commercial.
+\item
+  \textbf{Variables de conformité} : score KYC, dossier complet ou non,
+  ancienneté de la dernière revue.
+\end{itemize}
+
+\subsection{6. Qualité des données --- points
+d'attention}\label{qualituxe9-des-donnuxe9es-points-dattention}
+
+Le jeu de données est issu d'un système opérationnel réel. Vous
+rencontrerez donc :
+
+\begin{itemize}
+\tightlist
+\item
+  Des \textbf{valeurs manquantes} dans plusieurs colonnes
+  (\texttt{SALARY}, \texttt{INDUSTRY}, dates, etc.).
+\item
+  Des \textbf{valeurs \texttt{NULL} textuelles} à distinguer des
+  \texttt{NaN}.
+\item
+  Des \textbf{dates au format \texttt{YYYYMMDD} numérique} à convertir.
+\item
+  Des \textbf{incohérences} possibles (dates de clôture sans statut
+  \texttt{Closed}, soldes négatifs, etc.).
+\item
+  Un \textbf{déséquilibre de classes} entre comptes actifs et clos qu'il
+  faudra prendre en compte dans le modèle ML.
+\end{itemize}
+
+Une phase de \textbf{profilage et d'analyse exploratoire} est donc
+indispensable avant toute modélisation.
+
+\subsection{7. Volumétrie indicative}\label{volumuxe9trie-indicative}
+
+\begin{itemize}
+\tightlist
+\item
+  Fichier principal : \textasciitilde130 Mo, plusieurs centaines de
+  milliers de lignes.
+\item
+  Tables de dimensions : entre 6 ko et 80 ko chacune.
+\end{itemize}
+
+La volumétrie est suffisamment importante pour justifier une approche
+structurée (Pandas avec chunks, ou base de données analytique), mais
+reste manipulable sur une machine standard.
+
+\subsection{8. Précautions}\label{pruxe9cautions}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Ne pas publier les données} sur GitHub ou tout autre dépôt
+  public.
+\item
+  \textbf{Ne pas mentionner} l'origine des données dans aucun livrable.
+\item
+  Utiliser un \texttt{.gitignore} qui exclut au minimum :
+  \texttt{*.csv}, \texttt{*.xlsx}, \texttt{*.pkl}, \texttt{data/}.
+\end{itemize}
+
+\end{document}

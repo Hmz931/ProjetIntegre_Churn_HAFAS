@@ -1,0 +1,857 @@
+\documentclass[11pt,a4paper]{article}
+
+% ================ Encodage et langue ================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{lmodern}
+\usepackage{textcomp}
+
+% ================ Mise en page ================
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{parskip}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+
+% ================ Couleurs et liens ================
+\usepackage[table]{xcolor}
+\definecolor{primary}{HTML}{0B5394}
+\definecolor{accent}{HTML}{1F77B4}
+\definecolor{light}{HTML}{F2F2F2}
+\definecolor{codebg}{HTML}{F6F8FA}
+\definecolor{rulec}{HTML}{D0D7DE}
+
+\usepackage[colorlinks=true, linkcolor=primary, urlcolor=primary, citecolor=primary]{hyperref}
+
+% ================ Tableaux ================
+\usepackage{longtable, booktabs, array, tabularx}
+\renewcommand{\arraystretch}{1.25}
+\arrayrulecolor{rulec}
+
+% ================ Listes ================
+\usepackage{enumitem}
+\setlist{itemsep=2pt, topsep=4pt}
+
+% ================ Code et citations ================
+\usepackage{fancyvrb}
+\usepackage{framed}
+\definecolor{shadecolor}{named}{light}
+
+% Encadrés pour les blocs > (quotes)
+\usepackage{mdframed}
+\newmdenv[
+  linecolor=primary,
+  linewidth=2pt,
+  topline=false, bottomline=false, rightline=false,
+  innerleftmargin=10pt, innerrightmargin=8pt,
+  innertopmargin=6pt, innerbottommargin=6pt,
+  backgroundcolor=codebg,
+  skipabove=8pt, skipbelow=8pt
+]{quotebox}
+\renewenvironment{quote}{\begin{quotebox}}{\end{quotebox}}
+
+% ================ Titres ================
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primary}}{\thesection.}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{accent}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection}{0.6em}{}
+
+% ================ En-têtes et pieds de page ================
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{gray}ESPRIT School of Business --- M1 BA --- Projet Intégré}
+\fancyhead[R]{\small\color{gray}\nouppercase{\leftmark}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% ================ Pandoc helpers ================
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\passthrough}[1]{#1}
+
+\usepackage{calc}
+\providecommand{\real}[1]{#1}
+
+
+% ================ Métadonnées ================
+\title{\color{primary}\textbf{Guide Étudiant --- Démarche et Outils par
+Étape}}
+\author{Aymen Ben Brik}
+\date{2026}
+
+\begin{document}
+
+\begin{titlepage}
+\centering
+\vspace*{1.5cm}
+
+{\Large\bfseries ESPRIT School of Business}\\[0.3cm]
+{\large Master 1 --- Business Analytics (M1 BA)}\\[2cm]
+
+{\color{gray}\large Projet Intégré}\\[0.3cm]
+{\color{gray}\large Analyse et Prédiction du Churn Client}\\[2.2cm]
+
+\rule{0.85\linewidth}{1.2pt}\\[0.6cm]
+{\Huge\bfseries\color{primary} Guide Étudiant --- Démarche et Outils par
+Étape\par}
+\rule{0.85\linewidth}{1.2pt}\\[2cm]
+
+{\large Tuteur du projet}\\[0.2cm]
+{\Large\bfseries Aymen Ben Brik}\\[1cm]
+{\large 2026}
+
+\vfill
+{\color{gray}\small Document à destination des étudiants}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section{Guide Étudiant --- Démarche et Outils par
+Étape}\label{guide-uxe9tudiant-duxe9marche-et-outils-par-uxe9tape}
+
+Ce guide vous accompagne \textbf{étape par étape} dans la réalisation du
+projet. Pour chaque phase, vous trouverez :
+
+\begin{itemize}
+\tightlist
+\item
+  Les \textbf{objectifs} à atteindre.
+\item
+  Les \textbf{livrables} intermédiaires attendus.
+\item
+  Une \textbf{proposition d'outils} parmi lesquels choisir (vous restez
+  libres, mais justifiez vos choix dans le rapport).
+\end{itemize}
+
+\begin{quote}
+\textbf{Conseil général} : ne cherchez pas à utiliser les outils les
+plus complexes. Privilégiez ceux que vous maîtrisez ou que vous pouvez
+prendre en main rapidement. Un outil simple bien utilisé vaut mieux
+qu'un outil sophistiqué mal utilisé.
+\end{quote}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Étape 0 --- Mise en place de
+l'environnement}\label{uxe9tape-0-mise-en-place-de-lenvironnement}
+
+\subsubsection{Objectifs}\label{objectifs}
+
+\begin{itemize}
+\tightlist
+\item
+  Préparer un environnement de travail reproductible.
+\item
+  Mettre en place le dépôt GitHub et la collaboration.
+\end{itemize}
+
+\subsubsection{À faire}\label{uxe0-faire}
+
+\begin{itemize}
+\tightlist
+\item
+  Créer un dépôt \textbf{GitHub} privé pour la phase de développement,
+  public à la livraison (ou public dès le départ si vous excluez bien
+  les données).
+\item
+  Inviter l'encadrant en tant que collaborateur.
+\item
+  Créer un environnement virtuel Python (\texttt{venv} ou
+  \texttt{conda}).
+\item
+  Rédiger un \texttt{requirements.txt} ou \texttt{environment.yml}.
+\item
+  Rédiger un premier \texttt{README.md} avec : description, structure du
+  dépôt, instructions d'installation.
+\item
+  Configurer un \texttt{.gitignore} qui exclut \textbf{toutes les
+  données} (\texttt{*.csv}, \texttt{*.xlsx}, \texttt{*.pkl}, dossier
+  \texttt{data/}, etc.) et les fichiers d'environnement (\texttt{venv/},
+  \texttt{\_\_pycache\_\_/}, \texttt{.env}).
+\end{itemize}
+
+\subsubsection{Outils proposés}\label{outils-proposuxe9s}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}ll@{}}
+\toprule\noalign{}
+Catégorie & Options \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Versioning & \textbf{Git + GitHub} (obligatoire) \\
+IDE & VS Code, PyCharm, JetBrains DataSpell \\
+Environnement Python & \texttt{venv}, \texttt{conda}, \texttt{mamba},
+\texttt{uv}, \texttt{poetry} \\
+Notebooks & Jupyter Lab, Jupyter Notebook, VS Code Notebooks \\
+Gestion de projet & GitHub Projects, Trello, Notion \\
+\end{longtable}
+}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Étape 1 --- Exploration des données
+(EDA)}\label{uxe9tape-1-exploration-des-donnuxe9es-eda}
+
+\subsubsection{Objectifs}\label{objectifs-1}
+
+\begin{itemize}
+\tightlist
+\item
+  Comprendre la structure, la volumétrie et la qualité des données.
+\item
+  Identifier les variables intéressantes pour le churn.
+\item
+  Documenter les problèmes de qualité à traiter.
+\end{itemize}
+
+\subsubsection{À faire}\label{uxe0-faire-1}
+
+\begin{itemize}
+\tightlist
+\item
+  Charger les fichiers et vérifier leur intégrité.
+\item
+  Calculer : nombre de lignes, types des colonnes, taux de valeurs
+  manquantes, distributions.
+\item
+  Croiser les données avec les dimensions (vérifier que les clés
+  correspondent).
+\item
+  Visualiser : distributions par variable, corrélations, taux de churn
+  par segment.
+\item
+  Produire un \textbf{rapport d'exploration} (notebook) avec vos
+  premières observations.
+\end{itemize}
+
+\subsubsection{Outils proposés}\label{outils-proposuxe9s-1}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Catégorie
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Options
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Manipulation & \textbf{pandas}, \textbf{polars} (plus rapide sur grosse
+volumétrie), DuckDB \\
+Profilage automatique & \texttt{ydata-profiling} (ex-pandas-profiling),
+\texttt{sweetviz}, \texttt{dataprep} \\
+Visualisation & \textbf{matplotlib}, \textbf{seaborn}, \textbf{plotly},
+\textbf{altair} \\
+\end{longtable}
+}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Étape 2 --- ETL (Extract -- Transform --
+Load)}\label{uxe9tape-2-etl-extract-transform-load}
+
+\subsubsection{Objectifs}\label{objectifs-2}
+
+\begin{itemize}
+\tightlist
+\item
+  Construire un pipeline reproductible qui transforme les données brutes
+  en données analytiques propres.
+\item
+  Charger ces données dans une base analytique exploitable par la BI et
+  le ML.
+\end{itemize}
+
+\subsubsection{À faire}\label{uxe0-faire-2}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Extract} : lecture des CSV et fichiers Excel.
+\item
+  \textbf{Transform} :
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Conversion des dates (\texttt{YYYYMMDD} → \texttt{datetime}).
+  \item
+    Traitement des valeurs \texttt{NULL} textuelles.
+  \item
+    Jointures avec les tables de dimensions.
+  \item
+    Calcul de variables dérivées (âge, ancienneté, etc.).
+  \item
+    Déduplication et contrôle de cohérence.
+  \end{itemize}
+\item
+  \textbf{Load} : chargement dans le Data Warehouse cible.
+\end{enumerate}
+
+\subsubsection{Outils proposés}\label{outils-proposuxe9s-2}
+
+Trois familles d'outils sont acceptées pour l'intégration des données.
+Choisissez celle qui correspond le mieux aux compétences de l'équipe et
+aux contraintes de votre poste de travail.
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Outil
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Type
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Forces
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+À considérer
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Talend Open Studio} & ETL graphique open source & Interface
+visuelle (drag \& drop), nombreux connecteurs, génère du code Java,
+bonne traçabilité du flux & Installation lourde (JDK requis), démarrage
+plus long, version Open Studio non maintenue récemment \\
+\textbf{SSIS} (SQL Server Integration Services) & ETL graphique
+Microsoft & Très bien intégré avec SQL Server et Power BI, mature en
+entreprise, performant sur grosse volumétrie & Nécessite Windows +
+Visual Studio + SQL Server Data Tools, écosystème Microsoft requis \\
+\textbf{Python} (pandas / polars + SQLAlchemy / DuckDB) & ETL
+programmatique & Flexible, reproductible, versionnable facilement,
+transition naturelle vers le ML & Pas d'interface graphique, demande de
+la rigueur dans la structuration du code \\
+\end{longtable}
+}
+
+\paragraph{Comment choisir ?}\label{comment-choisir}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Vous visez l'écosystème Microsoft (Power BI + SQL Server)} →
+  \textbf{SSIS} est cohérent de bout en bout.
+\item
+  \textbf{Vous voulez une approche visuelle indépendante de la base
+  cible} → \textbf{Talend Open Studio}.
+\item
+  \textbf{Vous voulez la solution la plus rapide à mettre en place et
+  compatible avec le ML qui suit} → \textbf{Python}.
+\end{itemize}
+
+\paragraph{Outils complémentaires}\label{outils-compluxe9mentaires}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Catégorie
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Options
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Transformation SQL avancée & \textbf{dbt}, \textbf{DuckDB}, SQL natif \\
+Orchestrateur (optionnel, \emph{overkill} sur 1 mois) & Apache Airflow,
+Prefect, Dagster \\
+Alternative no-code & Pentaho Kettle, KNIME \\
+\end{longtable}
+}
+
+\begin{quote}
+\textbf{Important} : quel que soit l'outil retenu, votre pipeline doit
+être \textbf{reproductible} (un tiers doit pouvoir le ré-exécuter) et
+\textbf{documenté} par un schéma clair du flux de données.
+\end{quote}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Étape 3 --- Data Warehouse et modélisation dimensionnelle
+(BI)}\label{uxe9tape-3-data-warehouse-et-moduxe9lisation-dimensionnelle-bi}
+
+\subsubsection{Objectifs}\label{objectifs-3}
+
+\begin{itemize}
+\tightlist
+\item
+  Stocker les données préparées dans une base interrogeable.
+\item
+  Modéliser en étoile : une table de faits + plusieurs tables de
+  dimensions.
+\end{itemize}
+
+\subsubsection{À faire}\label{uxe0-faire-3}
+
+\begin{itemize}
+\tightlist
+\item
+  Choisir la base de données cible.
+\item
+  Modéliser la table de faits : grain = (client, compte, mois) ou
+  (client, compte) selon votre choix.
+\item
+  Définir les dimensions : \texttt{dim\_client}, \texttt{dim\_compte},
+  \texttt{dim\_produit}, \texttt{dim\_temps}, \texttt{dim\_industrie},
+  \texttt{dim\_devise}, \texttt{dim\_motif\_cloture}, etc.
+\item
+  Créer les scripts SQL de création des tables.
+\item
+  Charger les données depuis l'ETL.
+\item
+  Rédiger un schéma visuel (diagramme en étoile).
+\end{itemize}
+
+\subsubsection{Outils proposés}\label{outils-proposuxe9s-3}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Catégorie
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Options
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Base de données analytique légère & \textbf{DuckDB} (excellent pour ce
+projet : zéro configuration), \textbf{SQLite} \\
+Base de données SQL classique & \textbf{PostgreSQL}, \textbf{MySQL},
+\textbf{MariaDB} \\
+Base de données analytique avancée & \textbf{ClickHouse}, \textbf{MS SQL
+Server} (utile si vous visez Power BI sur site) \\
+Modélisation dimensionnelle & \textbf{dbt} (transformation + tests), SQL
+natif \\
+Visualisation du schéma & dbdiagram.io, draw.io, Lucidchart, Mermaid \\
+\end{longtable}
+}
+
+\begin{quote}
+\textbf{Recommandation} : \textbf{DuckDB} ou \textbf{PostgreSQL} sont
+les meilleurs choix pour ce projet. DuckDB pour la simplicité,
+PostgreSQL si vous voulez une expérience plus proche de la production.
+\end{quote}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Étape 4 --- Tableaux de bord Power
+BI}\label{uxe9tape-4-tableaux-de-bord-power-bi}
+
+\subsubsection{Objectifs}\label{objectifs-4}
+
+\begin{itemize}
+\tightlist
+\item
+  Restituer les KPIs métier de manière interactive.
+\item
+  Permettre une exploration par profil utilisateur (direction,
+  conseillers, marketing).
+\end{itemize}
+
+\subsubsection{À faire}\label{uxe0-faire-4}
+
+\begin{itemize}
+\tightlist
+\item
+  Se connecter à la source de données (DWH).
+\item
+  Définir les mesures DAX nécessaires (taux de churn, ancienneté
+  moyenne, etc.).
+\item
+  Construire au minimum \textbf{3 pages} :
+
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \tightlist
+  \item
+    \textbf{Vue d'ensemble} : KPIs clés, taux de churn global,
+    évolution.
+  \item
+    \textbf{Analyse du churn} : décomposition par segment (âge, secteur,
+    ancienneté, produit, devise).
+  \item
+    \textbf{Segmentation client} : profils, valeur client, comptes à
+    risque.
+  \end{enumerate}
+\item
+  Soigner la mise en page : filtres, slicers, navigation entre pages,
+  infobulles.
+\item
+  Publier le rapport (Power BI Service ou fichier \texttt{.pbix}).
+\end{itemize}
+
+\subsubsection{Outils proposés}\label{outils-proposuxe9s-4}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Catégorie
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Options
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Outil principal & \textbf{Power BI Desktop} (obligatoire --- l'énoncé
+l'impose) \\
+Publication & Power BI Service (compte gratuit pour la publication,
+payant pour le partage) \\
+Alternatives complémentaires & Tableau, Metabase, Apache Superset,
+Looker Studio (non --- Power BI exigé) \\
+\end{longtable}
+}
+
+\begin{quote}
+\textbf{Conseil} : la qualité du design des dashboards compte.
+Inspirez-vous des galeries Power BI officielles. Ne surchargez pas vos
+pages.
+\end{quote}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Étape 5 --- Machine
+Learning}\label{uxe9tape-5-machine-learning}
+
+\subsubsection{Objectifs}\label{objectifs-5}
+
+\begin{itemize}
+\tightlist
+\item
+  Construire un modèle qui prédit la probabilité de churn d'un client.
+\item
+  Choisir le meilleur modèle de manière justifiée.
+\end{itemize}
+
+\subsubsection{À faire}\label{uxe0-faire-5}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Préparation} : sélectionner les features, encoder les
+  variables catégorielles, gérer le déséquilibre (poids des classes,
+  SMOTE, etc.), split train/test stratifié.
+\item
+  \textbf{Modélisation} : entraîner \textbf{au moins 3 modèles}
+  différents (par exemple : régression logistique en baseline, Random
+  Forest, XGBoost).
+\item
+  \textbf{Évaluation} : utiliser les métriques adaptées au déséquilibre
+  (precision, recall, F1, \textbf{ROC-AUC}, \textbf{PR-AUC}). Pas
+  seulement l'accuracy.
+\item
+  \textbf{Tuning} : optimiser les hyperparamètres du meilleur candidat.
+\item
+  \textbf{Interprétation} : importance des features + valeurs SHAP.
+\item
+  \textbf{Sauvegarde} : sérialiser le modèle final.
+\end{enumerate}
+
+\subsubsection{Outils proposés}\label{outils-proposuxe9s-5}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Catégorie
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Options
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Manipulation & \textbf{pandas}, \textbf{numpy} \\
+Modèles classiques & \textbf{scikit-learn} \\
+Modèles boostés & \textbf{XGBoost}, \textbf{LightGBM},
+\textbf{CatBoost} \\
+Déséquilibre de classes & \texttt{imbalanced-learn} (SMOTE),
+\texttt{scale\_pos\_weight} \\
+Hyperparamètres & \texttt{GridSearchCV}, \texttt{RandomizedSearchCV},
+\textbf{Optuna} \\
+Interprétabilité & \textbf{SHAP}, \texttt{eli5}, importance native des
+arbres \\
+Sauvegarde & \textbf{joblib}, \texttt{pickle}, formats ONNX ou MLflow \\
+Suivi d'expériences (optionnel) & \textbf{MLflow}, Weights \& Biases \\
+\end{longtable}
+}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Étape 6 --- Interface web et
+déploiement}\label{uxe9tape-6-interface-web-et-duxe9ploiement}
+
+\subsubsection{Objectifs}\label{objectifs-6}
+
+\begin{itemize}
+\tightlist
+\item
+  Exposer le modèle ML et les analyses à des utilisateurs
+  non-techniques.
+\item
+  Déployer en ligne pour une démonstration accessible.
+\end{itemize}
+
+\subsubsection{À faire}\label{uxe0-faire-6}
+
+\begin{itemize}
+\tightlist
+\item
+  Concevoir une interface simple avec au moins :
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Un \textbf{formulaire de prédiction individuelle} (saisir un profil
+    client → recevoir un score de churn).
+  \item
+    Une \textbf{liste des clients actifs à risque} issue d'une
+    prédiction en lot.
+  \item
+    Des \textbf{KPIs de synthèse}.
+  \end{itemize}
+\item
+  Brancher le modèle sauvegardé à l'application.
+\item
+  Déployer sur une plateforme cloud accessible publiquement (URL fournie
+  dans le README).
+\end{itemize}
+
+\subsubsection{Outils proposés --- Front + back unifié (recommandé pour
+ce
+projet)}\label{outils-proposuxe9s-front-back-unifiuxe9-recommanduxe9-pour-ce-projet}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Outil
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Forces
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Limites
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Streamlit} & Très rapide à développer en Python pur, idéal pour
+démo data & Personnalisation graphique limitée \\
+\textbf{Gradio} & Très simple pour exposer un modèle ML & Moins
+polyvalent qu'un dashboard complet \\
+\textbf{Dash (Plotly)} & Très bonnes visualisations, plus contrôlable &
+Courbe d'apprentissage un peu plus longue \\
+\end{longtable}
+}
+
+\subsubsection{Outils proposés --- Front et back séparés (si vous voulez
+aller plus
+loin)}\label{outils-proposuxe9s-front-et-back-suxe9paruxe9s-si-vous-voulez-aller-plus-loin}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}ll@{}}
+\toprule\noalign{}
+Couche & Options \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+API back-end & \textbf{FastAPI} (recommandé), Flask, Django REST \\
+Front-end & React, Vue, Angular, Next.js, simple HTML/Bootstrap \\
+\end{longtable}
+}
+
+\subsubsection{Outils proposés --- Hébergement /
+Déploiement}\label{outils-proposuxe9s-huxe9bergement-duxe9ploiement}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Option
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Idéal pour
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Streamlit Community Cloud} & App Streamlit (gratuit, ultra
+simple) \\
+\textbf{Hugging Face Spaces} & App Gradio / Streamlit (gratuit) \\
+\textbf{Render} & App Python complète (free tier) \\
+\textbf{Railway} & App Python + DB (free tier limité) \\
+\textbf{Vercel / Netlify} & Front statique ou Next.js \\
+\textbf{Docker + un cloud (Azure, GCP, AWS)} & Si vous maîtrisez
+Docker \\
+\end{longtable}
+}
+
+\begin{quote}
+\textbf{Recommandation} : \textbf{Streamlit + Streamlit Cloud} ou
+\textbf{Gradio + Hugging Face Spaces} pour un déploiement rapide et
+gratuit. Visez la simplicité.
+\end{quote}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Étape 7 --- Rapport et
+présentation}\label{uxe9tape-7-rapport-et-pruxe9sentation}
+
+\subsubsection{Objectifs}\label{objectifs-7}
+
+\begin{itemize}
+\tightlist
+\item
+  Documenter votre démarche, vos choix et vos résultats.
+\item
+  Convaincre le jury en 20 minutes que votre solution répond au besoin.
+\end{itemize}
+
+\subsubsection{Structure recommandée du rapport (25--40
+pages)}\label{structure-recommanduxe9e-du-rapport-2540-pages}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Page de garde et résumé exécutif} (1 page).
+\item
+  \textbf{Introduction et contexte} (2 pages).
+\item
+  \textbf{Description et exploration des données} (3--5 pages).
+\item
+  \textbf{Architecture de la solution} (2--3 pages, avec schémas).
+\item
+  \textbf{ETL et modélisation dimensionnelle} (3--5 pages).
+\item
+  \textbf{Analyses BI et dashboards Power BI} (3--5 pages, captures
+  d'écran).
+\item
+  \textbf{Modélisation ML} (5--8 pages, métriques, comparaisons,
+  interprétation).
+\item
+  \textbf{Interface web et déploiement} (2--3 pages, captures, lien
+  démo).
+\item
+  \textbf{Limites et perspectives} (1--2 pages).
+\item
+  \textbf{Conclusion} (1 page).
+\item
+  \textbf{Annexes} : références, code clés, glossaire.
+\end{enumerate}
+
+\subsubsection{Outils proposés}\label{outils-proposuxe9s-6}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Catégorie
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Options
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Rédaction du rapport & \textbf{LaTeX} (Overleaf), \textbf{Microsoft
+Word}, \textbf{Google Docs}, \textbf{Typst}, Markdown + Pandoc \\
+Diagrammes & \textbf{draw.io}, \textbf{Lucidchart}, \textbf{Mermaid},
+\textbf{Excalidraw}, dbdiagram.io \\
+Captures d'écran & ShareX, Snipping Tool, macOS Screenshot \\
+Slides & \textbf{PowerPoint}, \textbf{Google Slides}, \textbf{Canva},
+\textbf{Beamer} (LaTeX), Marp (Markdown) \\
+\end{longtable}
+}
+
+\subsubsection{Conseils pour la présentation
+orale}\label{conseils-pour-la-pruxe9sentation-orale}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Temps} : 20 minutes de présentation + 10 minutes de questions.
+  Ne dépassez pas.
+\item
+  \textbf{Rythme} : \textasciitilde1 slide par minute.
+\item
+  \textbf{Démo} : prévoyez \textbf{au moins 5 minutes} de démonstration
+  live de votre application web. Préparez un plan B (vidéo de secours)
+  en cas de problème de connexion.
+\item
+  \textbf{Répartition} : chaque membre de l'équipe doit prendre la
+  parole.
+\item
+  \textbf{Public} : présentez à un public à la fois technique et métier
+  --- expliquez les choix techniques de manière accessible.
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Récapitulatif --- Stack recommandée (option simple et
+rapide)}\label{ruxe9capitulatif-stack-recommanduxe9e-option-simple-et-rapide}
+
+Si vous voulez une stack qui ``fonctionne'', voici une combinaison
+cohérente :
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}ll@{}}
+\toprule\noalign{}
+Composante & Choix recommandé \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Langage & Python 3.10+ \\
+EDA / ETL & pandas + Jupyter \\
+Data Warehouse & DuckDB ou PostgreSQL \\
+Dashboards & Power BI Desktop \\
+ML & scikit-learn + XGBoost \\
+Interface web & Streamlit \\
+Déploiement & Streamlit Community Cloud \\
+Versioning & Git + GitHub \\
+Rapport & Word ou LaTeX (Overleaf) \\
+Slides & PowerPoint ou Google Slides \\
+\end{longtable}
+}
+
+Cette stack permet de couvrir tout le périmètre en restant dans le temps
+imparti. Vous êtes libres d'en choisir une autre, \textbf{mais justifiez
+vos choix dans le rapport}.
+
+\end{document}
