@@ -84,19 +84,11 @@ def build_fact_account_event(
     fact["product_key"] = dim_product["product_key"].values
 
     date_to_key = dim_date.set_index("full_date")["date_key"]
-    # ⚠️ Bug réel trouvé en test (rapporté par un membre de l'équipe, chargement
-    # PostgreSQL réussi mais contrainte FK rejetée) : 100 485 lignes n'ont pas de
-    # ACCT_OPENING_DATE (nullité structurelle, comptes sans produit attaché - cf.
-    # 01_etl/README.md). Le .map() produit donc des NaN pour ces lignes, et pandas
-    # convertit alors TOUTE la colonne en float64 dès qu'elle contient un NaN, même
-    # si toutes les autres valeurs sont des entiers. Résultat : PostgreSQL créait
-    # fact_account_event.date_key en "double precision" alors que dim_date.date_key
-    # est en "bigint" -> la contrainte de clé étrangère ne pouvait pas s'appliquer.
-    # pandas.Int64Dtype() (le "Int64" avec un I majuscule) est un entier *nullable* :
-    # il garde les valeurs manquantes comme <NA> sans forcer un passage en float.
-    fact["date_key"] = (
-        fact["ACCT_OPENING_DATE"].dt.normalize().map(date_to_key).astype("Int64")
-    )
+    # date_key est maintenant une clé textuelle (ex. "DATE_00001"), plus un entier :
+    # plus besoin de forcer un type numérique nullable ici. Les comptes sans
+    # ACCT_OPENING_DATE (nullité structurelle, cf. 01_etl/README.md) obtiennent
+    # simplement NaN/None via .map(), ce que pandas gère nativement pour du texte.
+    fact["date_key"] = fact["ACCT_OPENING_DATE"].dt.normalize().map(date_to_key)
 
     for fk_col, source_col in [
         ("client_key", "CUSTOMER_NO"), ("account_key", "ACCOUNT_NO"),

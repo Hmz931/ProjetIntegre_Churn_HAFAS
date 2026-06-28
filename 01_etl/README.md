@@ -151,6 +151,8 @@ même façon que le fichier principal l'a déjà fait via `data/anonymize.py`.
 | `STARTDATE`/`MATURITYDATE` format hérité | Décodé comme `CYYMMDD` (siècle + année + mois + jour), vérifié cohérent avec les plages de dates observées | Décodage appliqué et testé, mais à confirmer avec l'encadrant si possible (système source réel) |
 | Motifs de clôture ambigus | 6 à 7 motifs sur 20 restent classifiés `None` (ni clairement volontaire, ni involontaire) par l'heuristique de mots-clés | Décision d'équipe à prendre si une classification plus fine est nécessaire pour le rapport |
 | Code `INDUSTRY` 9998 | Absent de `dim_INDUSTRY.xlsx` (40 187 clients concernés) | Signaler comme limite des données dans le rapport |
+| `DATE_OF_BIRTH` postérieure à `CUST_OPENING_DATE` | 53 lignes — incohérence réelle du système source, sans cause univoque identifiable (impossible de savoir laquelle des deux dates est fausse). **Décision explicite : non corrigée**, pour ne pas remplacer une valeur incertaine par une autre valeur tout aussi incertaine | Signaler comme limite des données dans le rapport |
+| `LAST_REVIEW_DATE` postérieure à `NEXT__REVIEW_DATE` | 114 lignes — incohérence opérationnelle réelle (dossier revu après la date de prochaine revue prévue, sans mise à jour de cette dernière). **Décision explicite : non corrigée**, même raisonnement que ci-dessus | Signaler comme limite des données dans le rapport |
 
 ## Tests effectués
 
@@ -180,6 +182,26 @@ Ce pipeline a été exécuté de bout en bout contre le fichier réel `data_chur
      (`DependentObjectsStillExist`) — corrigé en supprimant explicitement
      `fact_account_event` en tout premier, avant toute opération sur les
      dimensions (voir `load.drop_fact_table_if_exists`).
+
+Trois bugs supplémentaires ont été trouvés grâce à un script de test de cohérence
+indépendant (`test_coherence_donnees.py`, à la racine du projet — ne modifie rien
+dans `etl_pipeline/`, sert uniquement à vérifier après coup) :
+
+  5. **`MARITAL_STATUS` incohérent pour 25 lignes (6 clients PM)** : la règle
+     posée pour les personnes morales (`NATURE_CLIENT == 'PM'`) ne s'appliquait
+     qu'aux valeurs manquantes (`NaN`), laissant passer des valeurs déjà présentes
+     dans le fichier source (`M`, `C`...) incohérentes avec un statut de personne
+     morale — corrigé en forçant la règle pour tout client `PM`, qu'une valeur
+     existe déjà ou non.
+  6. **`ACCT_OPENING_DATE` postérieure à `ACCT_CLOSE_DATE`** (33 571 lignes,
+     impossible logiquement) : vérifié que la cause est une pollution par des
+     dates proches de l'extraction du fichier source (ex. `2026-01-12`, répétée
+     sur 6 072 lignes) — la vraie date d'ouverture n'étant pas reconstituable,
+     ces valeurs sont neutralisées en `NaT` plutôt que conservées fausses.
+  7. **`STARTDATE` postérieure à `MATURITYDATE`** (2 575 lignes, même mécanisme
+     que le point 6) — `MATURITYDATE` reste cohérente avec `PRODUCT_STATUS=
+     'EXPIRED'` sur la quasi-totalité des cas observés, donc c'est `STARTDATE`
+     qui est neutralisée en `NaT`, pas `MATURITYDATE`.
 
 Les résultats numériques (445 803 événements, 410 587 comptes, taux de churn 36,1% au
 niveau compte et 41,2% au niveau événement) sont reproductibles et documentés dans

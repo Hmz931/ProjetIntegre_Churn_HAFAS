@@ -48,7 +48,8 @@ def build_dim_client(df: pd.DataFrame) -> pd.DataFrame:
         "CUST_OPENING_DATE", "LAST_REVIEW_DATE",
     ]].reset_index(drop=True)
 
-    dim_client.insert(0, "client_key", range(1, len(dim_client) + 1))
+    width = len(str(len(dim_client)))
+    dim_client.insert(0, "client_key", "CLI_" + pd.Series(range(1, len(dim_client) + 1)).astype(str).str.zfill(width).values)
 
     assert dim_client["CUSTOMER_NO"].is_unique, "CUSTOMER_NO n'est pas unique dans dim_client !"
     logger.info("DIM_CLIENT construite : %s clients uniques", f"{len(dim_client):,}")
@@ -102,7 +103,8 @@ def build_dim_branch(df: pd.DataFrame) -> pd.DataFrame:
     dim_branch = dim_branch[
         ["BRANCH", "branch_label", "region", "LOB", "PARTYCLASS"]
     ].reset_index(drop=True)
-    dim_branch.insert(0, "branch_key", range(1, len(dim_branch) + 1))
+    width = len(str(len(dim_branch)))
+    dim_branch.insert(0, "branch_key", "BRA_" + pd.Series(range(1, len(dim_branch) + 1)).astype(str).str.zfill(width).values)
 
     assert dim_branch["BRANCH"].is_unique, "BRANCH n'est pas unique dans dim_branch !"
     logger.info("DIM_BRANCH construite : %s agences uniques", f"{len(dim_branch):,}")
@@ -132,7 +134,8 @@ def build_dim_account(df: pd.DataFrame) -> pd.DataFrame:
         "ACCT_OPENING_DATE", "ACCT_CLOSE_DATE", "acct_tenure_days",
         "nb_accounts_per_client", "NEXT__REVIEW_DATE",
     ]].reset_index(drop=True)
-    dim_account.insert(0, "account_key", range(1, len(dim_account) + 1))
+    width = len(str(len(dim_account)))
+    dim_account.insert(0, "account_key", "ACC_" + pd.Series(range(1, len(dim_account) + 1)).astype(str).str.zfill(width).values)
 
     assert dim_account["ACCOUNT_NO"].is_unique, "ACCOUNT_NO n'est pas unique dans dim_account !"
     logger.info("DIM_ACCOUNT construite : %s comptes uniques", f"{len(dim_account):,}")
@@ -191,7 +194,8 @@ def build_dim_product(df: pd.DataFrame) -> pd.DataFrame:
 
     dim_product["product_line_risk"] = dim_product["PRODUCT_LINE"].map(config.PRODUCT_LINE_RISK_MAP)
 
-    dim_product.insert(0, "product_key", range(1, len(dim_product) + 1))
+    width = len(str(len(dim_product)))
+    dim_product.insert(0, "product_key", "PROD_" + pd.Series(range(1, len(dim_product) + 1)).astype(str).str.zfill(width).values)
 
     assert dim_product["product_key"].is_unique
     logger.info("DIM_PRODUCT construite : %s contrats (grain = compte x produit)",
@@ -289,7 +293,8 @@ def build_dim_closure(df: pd.DataFrame, dim_closure_reason_raw: pd.DataFrame | N
     dim_closure["churn_type"] = "INCONNU"
     dim_closure.loc[dim_closure["closure_reason"] == "NON_FERME", "churn_type"] = "NON_APPLICABLE"
 
-    dim_closure.insert(0, "closure_key", range(1, len(dim_closure) + 1))
+    width = len(str(len(dim_closure)))
+    dim_closure.insert(0, "closure_key", "CLO_" + pd.Series(range(1, len(dim_closure) + 1)).astype(str).str.zfill(width).values)
 
     assert dim_closure["closure_reason"].is_unique
     logger.info("DIM_CLOSURE construite : %s motifs uniques", f"{len(dim_closure):,}")
@@ -313,7 +318,8 @@ def build_dim_date(df: pd.DataFrame) -> pd.DataFrame:
     dim_date["year"] = dim_date["full_date"].dt.year
     dim_date["quarter"] = dim_date["full_date"].dt.quarter
     dim_date["month"] = dim_date["full_date"].dt.month
-    dim_date.insert(0, "date_key", range(1, len(dim_date) + 1))
+    width = len(str(len(dim_date)))
+    dim_date.insert(0, "date_key", "DATE_" + pd.Series(range(1, len(dim_date) + 1)).astype(str).str.zfill(width).values)
 
     logger.info("DIM_DATE construite : %s jours (%s -> %s)",
                 f"{len(dim_date):,}", min_date.date(), max_date.date())

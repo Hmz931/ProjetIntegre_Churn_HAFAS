@@ -71,8 +71,17 @@ def clean_qualitative_columns(df: pd.DataFrame) -> pd.DataFrame:
     # (PM) n'a pas de statut marital par nature (non applicable), ce qui est
     # différent d'une personne physique (PPH) dont le statut est simplement inconnu.
     # Imputer les deux par le mode global gonflerait artificiellement une catégorie.
-    df.loc[(df["NATURE_CLIENT"] == "PM") & (df["MARITAL_STATUS"].isna()),
-           "MARITAL_STATUS"] = "NON_APPLICABLE"
+    # MARITAL_STATUS : règle conditionnelle sur NATURE_CLIENT. Une personne morale
+    # (PM) n'a pas de statut marital par nature (non applicable), ce qui est
+    # différent d'une personne physique (PPH) dont le statut est simplement inconnu.
+    #
+    # ⚠️ Anomalie réelle trouvée par le script de cohérence (test_coherence_donnees.py) :
+    # 25 lignes (6 clients PM) ont déjà une vraie valeur M/C/D/V dans le fichier
+    # source, incohérente avec leur statut de personne morale. La règle ci-dessous
+    # force donc 'NON_APPLICABLE' pour TOUT client PM, qu'une valeur existe déjà ou
+    # non — pas seulement pour les NaN comme dans une version précédente, qui
+    # laissait passer ces 25 lignes incohérentes sans les corriger.
+    df.loc[df["NATURE_CLIENT"] == "PM", "MARITAL_STATUS"] = "NON_APPLICABLE"
     df.loc[(df["NATURE_CLIENT"] == "PPH") & (df["MARITAL_STATUS"].isna()),
            "MARITAL_STATUS"] = "INCONNU"
     df["MARITAL_STATUS"] = df["MARITAL_STATUS"].fillna("INCONNU")  # sécurité résiduelle
@@ -173,6 +182,38 @@ def clean_dates(df: pd.DataFrame) -> pd.DataFrame:
     df["STARTDATE"] = decode_cyymmdd(df["STARTDATE"])
     df["MATURITYDATE"] = decode_cyymmdd(df["MATURITYDATE"])
 
+    # ⚠️ Anomalies réelles trouvées par le script de cohérence
+    # (test_coherence_donnees.py), neutralisées AVANT toute imputation par médiane —
+    # même principe que pour DATE_OF_BIRTH ci-dessous : une date qu'on sait fausse
+    # ne doit jamais entrer dans le calcul d'une médiane.
+    #
+    # ACCT_OPENING_DATE postérieure à ACCT_CLOSE_DATE (33 571 lignes) : logiquement
+    # impossible (un compte ne peut pas fermer avant d'avoir ouvert). Vérifié que
+    # la cause est une pollution par des dates proches de l'extraction du fichier
+    # source (ex. 2026-01-12, répétée sur 6 072 lignes) plutôt qu'une vraie date
+    # d'ouverture. On ne peut pas reconstituer la vraie date -> neutralisée en NaT.
+    incoherence_acct = (
+        df["ACCT_OPENING_DATE"].notna() & df["ACCT_CLOSE_DATE"].notna()
+        & (df["ACCT_OPENING_DATE"] > df["ACCT_CLOSE_DATE"])
+    )
+    logger.info("[ACCT_OPENING_DATE] %s valeur(s) postérieure(s) à ACCT_CLOSE_DATE "
+                "neutralisées en NaT (incohérence logique, cause probable : "
+                "pollution par une date d'extraction système).", incoherence_acct.sum())
+    df.loc[incoherence_acct, "ACCT_OPENING_DATE"] = pd.NaT
+
+    # STARTDATE postérieure à MATURITYDATE : même mécanisme (une échéance ne peut
+    # pas être antérieure au début du contrat). MATURITYDATE reste cohérente avec
+    # PRODUCT_STATUS='EXPIRED' sur la quasi-totalité des cas observés -> c'est
+    # STARTDATE qui est fausse, pas MATURITYDATE.
+    incoherence_start = (
+        df["STARTDATE"].notna() & df["MATURITYDATE"].notna()
+        & (df["STARTDATE"] > df["MATURITYDATE"])
+    )
+    logger.info("[STARTDATE] %s valeur(s) postérieure(s) à MATURITYDATE neutralisées "
+                "en NaT (incohérence logique, cause probable : pollution par une "
+                "date d'extraction système).", incoherence_start.sum())
+    df.loc[incoherence_start, "STARTDATE"] = pd.NaT
+
     # --- Imputations ---
     # CUST_OPENING_DATE : distribution quasi symétrique -> médiane (robuste aux
     # extrêmes résiduels, équivalente à la moyenne ici).
@@ -192,7 +233,16 @@ def clean_dates(df: pd.DataFrame) -> pd.DataFrame:
 
     # STARTDATE, ACCT_OPENING_DATE, ACCT_CLOSE_DATE : nullité structurelle vérifiée
     # (corrélation à 100% avec l'absence de produit / le statut Active) -> laissées
-    # en l'état, voir TOLERATED_MISSING_COLUMNS dans config.py.
+    # en l'état, voir TOLERATED_MISSING_COLUMNS dans config.py. Les valeurs
+    # incohérentes neutralisées ci-dessus rejoignent ce même groupe de NaT tolérés.
+    #
+    # ⚠️ Limite connue NON corrigée (décision explicite) : DATE_OF_BIRTH >
+    # CUST_OPENING_DATE (53 lignes) et LAST_REVIEW_DATE > NEXT__REVIEW_DATE
+    # (114 lignes) restent des incohérences réelles du système source, sans cause
+    # univoque identifiable (impossible de savoir laquelle des deux dates est
+    # fausse) — documentées dans 01_etl/README.md plutôt que corrigées
+    # artificiellement, pour ne pas remplacer une valeur incertaine par une autre
+    # valeur tout aussi incertaine.
 
     return df
 
@@ -206,6 +256,24 @@ def clean_numeric_columns(df: pd.DataFrame) -> pd.DataFrame:
     # NaN volontairement conservés pour ces deux colonnes : asymétrie (skew) trop
     # forte pour qu'une moyenne ou une médiane soit représentative — voir
     # TOLERATED_MISSING_COLUMNS. Le ML devra gérer ces NaN explicitement.
+
+    # SALARY : quelques valeurs extrêmes (10 000 000, 25 000 000) gonflent la
+    # moyenne globale de ~30% à elles seules (moins de 0,01% des lignes). Vérifié
+    # que LOB ne les explique pas : ces valeurs apparaissent dans LOB=4, le LOB le
+    # plus fréquent et par ailleurs parfaitement normal (médiane=600 sur 394 876
+    # lignes), associées à des particuliers (PARTYCLASS='Retail', NATURE_CLIENT=
+    # 'PPH') — ce sont des erreurs de saisie isolées, pas un sous-segment métier
+    # légitime à traiter différemment. Mises à NaN plutôt que plafonnées : on ne
+    # connaît pas le vrai salaire, mieux vaut un NaN honnête qu'une valeur
+    # arbitraire (cohérent avec le choix déjà fait pour SALARY/ACCT_BALANCE
+    # ci-dessus). Seuil = 99,9e centile, calculé sur les valeurs non nulles
+    # uniquement (pas de fuite : un NaN n'entre pas dans le calcul du quantile).
+    salary_upper_bound = df["SALARY"].quantile(0.999)
+    n_outliers = (df["SALARY"] > salary_upper_bound).sum()
+    logger.info("[SALARY] %s valeur(s) au-delà du 99,9e centile (%.0f) mises à NaN "
+                "(erreurs de saisie probables, non expliquées par LOB).",
+                n_outliers, salary_upper_bound)
+    df.loc[df["SALARY"] > salary_upper_bound, "SALARY"] = pd.NA
 
     # AMOUNT : montant structurellement nul hors crédit/dépôt (pas une approximation,
     # une vraie absence de montant pour ces lignes).
