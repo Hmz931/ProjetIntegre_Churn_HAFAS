@@ -1,66 +1,25 @@
-# =========================================================
-# Données — règles
-# =========================================================
-# Par défaut on exclut toutes les données sensibles...
-*.csv
-*.xlsx
-*.xls
-*.txt
-*.parquet
-*.db
-*.sqlite
-*.duckdb
+# Données (confidentialité — voir data/README.md et 00_documentation/2_description_donnees.md)
+data/*.txt
+data/*.csv
+data/*.xlsx
+data/*.xls
 
-
-# ...mais on autorise explicitement le dataset anonymisé fourni
-# avec le projet (via Git LFS — voir .gitattributes).
-!data/data_churn.csv
-!data/dim_*.xlsx
-
-# Modèles ML sauvegardés (souvent volumineux)
-*.pkl
-*.joblib
-*.h5
-*.onnx
-
-# Fichiers Power BI (volumineux, peuvent contenir des données)
-*.pbix
-
-# =========================================================
-# Environnements et caches Python
-# =========================================================
+# Environnement Python
 venv/
 env/
-.venv/
 __pycache__/
-*.py[cod]
-*$py.class
+*.pyc
 .ipynb_checkpoints/
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
 
-# =========================================================
-# Fichiers d'environnement et secrets
-# =========================================================
-.env
-.env.local
-*.secret
-credentials.json
+# Modèles ML sérialisés (trop volumineux pour Git standard)
+#*.pkl
+#*.joblib
 
-# =========================================================
-# IDE / Système
-# =========================================================
-.vscode/
-.idea/
-*.swp
+# Fichiers Power BI (binaires volumineux)
+*.pbix
+
+# OS / éditeurs
 .DS_Store
-Thumbs.db
-
-# =========================================================
-# Logs et sorties
-# =========================================================
-*.log
-logs/
-mlruns/
-outputs/
+.vscode/
+*.iml
+.idea/

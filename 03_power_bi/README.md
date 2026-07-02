@@ -1,27 +1,23 @@
-# 03 — Power BI
+# 03_power_bi/
 
-Placez ici les livrables Power BI :
+**Hors scope de cette régénération automatique** (décision explicite : pas de Power BI
+produit par l'assistant).
 
-- Le fichier `.pbix` (attention : à exclure du repo s'il contient des données sensibles ; voir `.gitignore`).
-- Des captures d'écran des pages du rapport.
-- La documentation des mesures DAX et de la source de données.
+## Ce qui est déjà disponible pour démarrer ce dossier
 
-## Contenu minimum attendu
+Les KPIs métier nécessaires aux dashboards sont déjà calculés et documentés dans
+`01_etl/notebooks/02_ETL.ipynb` (section 3), à partir des tables produites par le
+pipeline ETL :
 
-Au moins **3 pages** dans le rapport Power BI :
-1. **Vue d'ensemble** — KPIs clés, taux de churn global.
-2. **Analyse du churn** — segmentation par âge, secteur, ancienneté, produit.
-3. **Segmentation client** — profils et identification des comptes à risque.
+- Taux de churn global, par segment client, par ligne de produit, par score KYC.
+- Taux de churn par secteur d'activité réel (`dim_INDUSTRY`) et par motif de clôture
+  réel (`dim_Closure_reason`) — nouveauté apportée par l'intégration des dimensions xlsx.
 
-## Structure suggérée
+## À faire par l'équipe
 
-```
-03_power_bi/
-├── rapport.pbix         # NE PAS COMMITER si contient des données
-├── screenshots/
-│   ├── page1_overview.png
-│   ├── page2_churn.png
-│   └── page3_segments.png
-├── measures_dax.md      # documentation des mesures
-└── README.md
-```
+- [ ] Connecter Power BI Desktop à PostgreSQL (une fois `02_data_warehouse/` validé) ou
+      directement aux fichiers exportés depuis le pipeline ETL.
+- [ ] Construire au minimum les 3 pages demandées par la documentation (vue d'ensemble,
+      analyse du churn, segmentation client) — voir `00_documentation/4_guide_etudiant.md`,
+      étape 4.
+- [ ] Définir les mesures DAX correspondant aux KPIs déjà identifiés.

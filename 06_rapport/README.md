@@ -1,32 +1,14 @@
-# 06 — Rapport
+# 06_rapport/
 
-Placez ici les **sources** du rapport et sa version finale en PDF.
+Sources du rapport final (25-40 pages, voir `00_documentation/4_guide_etudiant.md`,
+étape 7, pour la structure recommandée) et version PDF finale.
 
-## Format attendu
+**Non rédigé par cette régénération** — réservé à l'équipe.
 
-- **Document final** : PDF (25–40 pages).
-- **Sources** : libres (Word, LaTeX, Markdown, Typst, etc.).
-
-## Structure recommandée du rapport
-
-1. Page de garde et résumé exécutif (1 page).
-2. Introduction et contexte (2 pages).
-3. Description et exploration des données (3–5 pages).
-4. Architecture de la solution (2–3 pages, avec schémas).
-5. ETL et modélisation dimensionnelle (3–5 pages).
-6. Analyses BI et dashboards Power BI (3–5 pages, captures).
-7. Modélisation ML (5–8 pages).
-8. Interface web et déploiement (2–3 pages, captures, lien démo).
-9. Limites et perspectives (1–2 pages).
-10. Conclusion (1 page).
-11. Annexes.
-
-## Structure de dossier suggérée
-
-```
-06_rapport/
-├── sources/             # fichiers source (.docx, .tex, .md...)
-├── figures/             # figures et captures utilisées
-├── rapport_final.pdf    # version finale livrée
-└── README.md
-```
+Éléments déjà disponibles pour nourrir certaines sections du rapport :
+- Section "Description et exploration des données" : `01_etl/notebooks/01_exploration.ipynb`.
+- Section "ETL et modélisation dimensionnelle" : `01_etl/README.md` (décisions de grain
+  justifiées) et `01_etl/notebooks/DW.svg` (schéma visuel).
+- Section "Limites et perspectives" : voir le tableau "Points de vigilance transmis à
+  l'équipe" dans `01_etl/README.md` (ex. code INDUSTRY 9998 absent du référentiel,
+  motifs de clôture ambigus, imputation de ACCOUNT_STATUS à valider).
