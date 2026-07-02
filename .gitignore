@@ -12,8 +12,8 @@ __pycache__/
 .ipynb_checkpoints/
 
 # Modèles ML sérialisés (trop volumineux pour Git standard)
-*.pkl
-*.joblib
+#*.pkl
+#*.joblib
 
 # Fichiers Power BI (binaires volumineux)
 *.pbix
