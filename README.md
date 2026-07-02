@@ -13,9 +13,9 @@
 | `00_documentation/` | ✅ Fournie par l'encadrant |
 | `01_etl/` | ✅ Pipeline ETL complet (module Python orchestré), EDA documentée |
 | `02_data_warehouse/` | ✅ Validé sur un vrai serveur PostgreSQL (7/7 tables chargées, contraintes appliquées) |
-| `03_power_bi/` | ⬜ Non commencé |
-| `04_machine_learning/` | ⬜ Non commencé (jeu de données prêt à l'emploi, voir `04_machine_learning/README.md`) |
-| `05_web_app/` | ⬜ Non commencé (`app.py` réservé à la racine) |
+| `03_power_bi/` | ✅ 3 dashboards |
+| `04_machine_learning/` | ✅ Fait|
+| `05_web_app/` | ✅ Fait (`app.py` réservé à la racine) |
 | `06_rapport/` | ⬜ Non rédigé |
 | `07_presentation/` | ⬜ Non préparée |
 
