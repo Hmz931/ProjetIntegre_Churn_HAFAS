@@ -92,13 +92,9 @@ détail de cette décision et sa vérification sur les données réelles.
 
 ## Composition de l'équipe
 
-| Nom | Rôle principal | Email |
-|---|---|---|
-| Hamza | ETL | *à compléter* |
-| Eya | ETL | *à compléter* |
-| Fares | ETL / Data Warehouse | *à compléter* |
-| Aïcha | *à compléter* | *à compléter* |
-
-## Contact tuteur
-
-Aymen Ben Brik — *coordonnées à compléter par le tuteur*.
+| Nom | Rôle principal  
+|---|---
+| Hamza | ETL / ML
+| Eya | ETL / PowerBI
+| Fares | ETL / ML 
+| Aïcha | ETL / POWER BI
