@@ -54,11 +54,11 @@ PROJETINTEGRE_CHURN_HAFAS/
 │   │   └── load_warehouse.py  Point d'entrée du chargement (appelle 01_etl/etl_pipeline/)
 │   ├── kpis.md                 KPIs métier en SQL (équivalent des KPIs pandas de 02_ETL.ipynb)
 │   └── README.md
-├── 03_power_bi/              
-├── 04_machine_learning/      
-├── 05_web_app/               
-├── 06_rapport/                
-├── 07_presentation/           
+├── 03_power_bi/              Réservé — non commencé
+├── 04_machine_learning/      Réservé — non commencé
+├── 05_web_app/               Réservé — non commencé
+├── 06_rapport/                Réservé — non rédigé
+├── 07_presentation/           Réservé — non préparée
 ├── data/                      Données brutes (non versionnées, voir data/README.md)
 ├── run.py                     Point d'entrée : pipeline ETL complet + chargement DWH
 ├── app.py                     Stub réservé pour l'application web (05_web_app/)
@@ -94,13 +94,10 @@ détail de cette décision et sa vérification sur les données réelles.
 
 ## Composition de l'équipe
 
-| Nom | Rôle principal | Email |
-|---|---|---|
-| Hamza | ETL | *à compléter* |
-| Eya | ETL | *à compléter* |
-| Fares | ETL / Data Warehouse | *à compléter* |
-| Aïcha | *à compléter* | *à compléter* |
-
-## Contact tuteur
-
-Aymen Ben Brik — *coordonnées à compléter par le tuteur*.
+| Nom | Rôle principal  
+|---|---
+| Fares | ETL / ML 
+| Eya | ETL / PowerBI
+| Aïcha | ETL / POWER BI
+| Hamza | ETL / ML
+| Sahar | ETL / POWER BI
