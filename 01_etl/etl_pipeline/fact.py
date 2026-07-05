@@ -98,6 +98,35 @@ def build_fact_account_event(
         if orphans.sum() > 0:
             logger.warning("%s ligne(s) avec %s orphelin — à investiguer.", orphans.sum(), fk_col)
 
+    # ⚠️ date_key n'est PAS vérifiée par la boucle ci-dessus : contrairement aux
+    # autres clés étrangères, une valeur nulle ici n'est jamais un orphelin
+    # (un échec de jointure imprévu), mais un cas structurel prévu — voir
+    # ACCT_OPENING_DATE dans clean.py. On la contrôle donc séparément, avec une
+    # règle différente : le nombre de date_key manquants doit être EXACTEMENT
+    # égal au nombre d'ACCT_OPENING_DATE manquants en amont, ni plus ni moins.
+    # Si ce n'est pas le cas, ce n'est plus de la nullité structurelle attendue
+    # mais un vrai échec de jointure (ex. une date valide absente de dim_date,
+    # ou un problème de normalisation d'heure) qu'il faut corriger.
+    n_date_key_null = fact["date_key"].isna().sum()
+    n_opening_date_null = fact["ACCT_OPENING_DATE"].isna().sum()
+    if n_date_key_null != n_opening_date_null:
+        logger.error(
+            "INCOHÉRENCE : %s date_key manquant(s) dans FACT_ACCOUNT_EVENT, mais "
+            "%s ACCT_OPENING_DATE manquant(e)s en amont. Ces deux nombres devraient "
+            "être identiques (nullité structurelle uniquement). L'écart de %s "
+            "ligne(s) signale un échec de jointure réel avec dim_date à investiguer "
+            "(date présente mais absente de la plage dim_date, ou problème de "
+            "normalisation d'heure).",
+            n_date_key_null, n_opening_date_null, abs(n_date_key_null - n_opening_date_null),
+        )
+    else:
+        logger.info(
+            "date_key : %s ligne(s) manquante(s) (%.1f%% de la table de faits), "
+            "vérifié strictement égal aux ACCT_OPENING_DATE manquantes en amont — "
+            "nullité 100%% structurelle, aucun échec de jointure.",
+            f"{n_date_key_null:,}", n_date_key_null / len(fact) * 100,
+        )
+
     fact["churn"] = fact["ACCOUNT_NO"].map(churn_by_account)
 
     end_date_acct = fact["ACCT_CLOSE_DATE"].fillna(config.REFERENCE_DATE)

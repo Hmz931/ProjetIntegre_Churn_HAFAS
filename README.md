@@ -5,6 +5,8 @@
 > **Tuteur du projet** : Aymen Ben Brik
 > **Équipe** : Hamza, Eya, Fares, Aïcha
 > **Branche de travail** : `ETL_EyaFares`
+> **Application Streamlit** : _(lien à renseigner une fois déployée — voir `05_web_app/README.md`)_
+
 
 ## État actuel du projet
 
@@ -13,9 +15,9 @@
 | `00_documentation/` | ✅ Fournie par l'encadrant |
 | `01_etl/` | ✅ Pipeline ETL complet (module Python orchestré), EDA documentée |
 | `02_data_warehouse/` | ✅ Validé sur un vrai serveur PostgreSQL (7/7 tables chargées, contraintes appliquées) |
-| `03_power_bi/` | ⬜ Non commencé |
-| `04_machine_learning/` | ⬜ Non commencé (jeu de données prêt à l'emploi, voir `04_machine_learning/README.md`) |
-| `05_web_app/` | ⬜ Non commencé (`app.py` réservé à la racine) |
+| `03_power_bi/` | ✅ 3 dashboards |
+| `04_machine_learning/` | ✅ Fait|
+| `05_web_app/` | ✅ Fait (`app.py` réservé à la racine) |
 | `06_rapport/` | ⬜ Non rédigé |
 | `07_presentation/` | ⬜ Non préparée |
 
@@ -92,13 +94,10 @@ détail de cette décision et sa vérification sur les données réelles.
 
 ## Composition de l'équipe
 
-| Nom | Rôle principal | Email |
-|---|---|---|
-| Hamza | ETL | *à compléter* |
-| Eya | ETL | *à compléter* |
-| Fares | ETL / Data Warehouse | *à compléter* |
-| Aïcha | *à compléter* | *à compléter* |
-
-## Contact tuteur
-
-Aymen Ben Brik — *coordonnées à compléter par le tuteur*.
+| Nom | Rôle principal  
+|---|---
+| Fares | ETL / ML 
+| Eya | ETL / PowerBI
+| Hamza | ETL / ML
+| Aïcha | ETL / POWER BI
+| Sahar | ETL / POWER BI
