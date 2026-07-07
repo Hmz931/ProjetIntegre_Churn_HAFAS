@@ -1,0 +1,56 @@
+\babel@toc {french}{}\relax 
+\contentsline {chapter}{R\'esum\'e ex\'ecutif}{1}{chapter*.1}%
+\contentsline {chapter}{Abstract}{2}{chapter*.2}%
+\contentsline {chapter}{\numberline {1}Introduction et contexte}{5}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Contexte du projet}{5}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Objectifs}{5}{section.1.2}%
+\contentsline {section}{\numberline {1.3}\'Equipe et organisation}{5}{section.1.3}%
+\contentsline {section}{\numberline {1.4}D\'ep\^ot de code et gestion de versions}{6}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Plan du rapport}{7}{section.1.5}%
+\contentsline {chapter}{\numberline {2}Description et exploration des donn\'ees}{8}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Origine et anonymisation}{8}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Volum\'etrie et grain}{8}{section.2.2}%
+\contentsline {section}{\numberline {2.3}D\'efinition retenue du churn}{8}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Qualit\'e des donn\'ees - constats de l'exploration}{8}{section.2.4}%
+\contentsline {chapter}{\numberline {3}Architecture de la solution}{10}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Vue d'ensemble du pipeline}{10}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Choix technologiques}{10}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Sch\'ema en \'etoile}{10}{section.3.3}%
+\contentsline {chapter}{\numberline {4}ETL et mod\'elisation dimensionnelle}{12}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Pipeline ETL}{12}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Anomalies r\'eelles d\'ecouvertes et corrig\'ees}{12}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}V\'erification de la nullit\'e structurelle de \texttt {date\_key}}{12}{subsection.4.1.2}%
+\contentsline {section}{\numberline {4.2}Entrep\^ot de donn\'ees PostgreSQL}{13}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Comparaison Talend vs Python}{13}{section.4.3}%
+\contentsline {chapter}{\numberline {5}Analyses BI et tableaux de bord Power BI}{15}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Vue d'ensemble}{15}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Analyse du profil client}{15}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Analyse produits et risque financier}{16}{section.5.3}%
+\contentsline {section}{\numberline {5.4}D\'ecomposition de la Value-at-Risk (VaR)}{17}{section.5.4}%
+\contentsline {section}{\numberline {5.5}Limites de cette partie}{17}{section.5.5}%
+\contentsline {chapter}{\numberline {6}Mod\'elisation supervis\'ee - pr\'ediction du churn}{18}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Grain et p\'erim\`etre}{18}{section.6.1}%
+\contentsline {section}{\numberline {6.2}S\'election des variables}{18}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Fuite de donn\'ees d\'etect\'ee et corrig\'ee}{18}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Pr\'etraitement}{19}{section.6.4}%
+\contentsline {section}{\numberline {6.5}Mod\`eles compar\'es et r\'esultats}{19}{section.6.5}%
+\contentsline {section}{\numberline {6.6}Limitations assum\'ees}{19}{section.6.6}%
+\contentsline {chapter}{\numberline {7}Analyse non supervis\'ee - segmentation et anomalies}{20}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Motivation et grain}{20}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Analyse en composantes principales (ACP)}{20}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Segmentation par K-means}{20}{section.7.3}%
+\contentsline {section}{\numberline {7.4}D\'etection d'anomalies par Isolation Forest}{21}{section.7.4}%
+\contentsline {section}{\numberline {7.5}Usage envisag\'e}{21}{section.7.5}%
+\contentsline {chapter}{\numberline {8}Interface web et d\'eploiement}{22}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Application Streamlit}{22}{section.8.1}%
+\contentsline {section}{\numberline {8.2}D\'eploiement}{22}{section.8.2}%
+\contentsline {section}{\numberline {8.3}Point de vigilance}{22}{section.8.3}%
+\contentsline {chapter}{\numberline {9}Limites et perspectives}{23}{chapter.9}%
+\contentsline {section}{\numberline {9.1}Limites connues}{23}{section.9.1}%
+\contentsline {section}{\numberline {9.2}Perspectives}{23}{section.9.2}%
+\contentsline {chapter}{\numberline {10}Conclusion}{24}{chapter.10}%
+\contentsline {chapter}{Bibliographie}{25}{chapter*.13}%
+\contentsline {chapter}{\numberline {A}Annexes}{26}{chapter.A}%
+\contentsline {section}{\numberline {A.1}Glossaire}{26}{section.A.1}%
+\contentsline {section}{\numberline {A.2}Structure du d\'ep\^ot de code}{26}{section.A.2}%
+\contentsline {section}{\numberline {A.3}Extrait de code - contr\^ole de nullit\'e structurelle de \texttt {date\_key}}{26}{section.A.3}%

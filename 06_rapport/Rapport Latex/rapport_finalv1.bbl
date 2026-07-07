@@ -1,0 +1,78 @@
+\begin{thebibliography}{11}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Ben~Brik(2026)]{benbrik2026cours}
+Aymen Ben~Brik.
+\newblock Support de cours — projet int{\'e}gr{\'e}, m1 business analytics.
+\newblock Support de cours non publi{\'e}, ESPRIT School of Business, 2026.
+\newblock Communication interne, ann\'ee universitaire 2025--2026.
+
+\bibitem[Breiman(2001)]{breiman2001random}
+Leo Breiman.
+\newblock Random forests.
+\newblock \emph{Machine Learning}, 45\penalty0 (1):\penalty0 5--32, 2001.
+
+\bibitem[Chawla et~al.(2002)Chawla, Bowyer, Hall, and
+  Kegelmeyer]{chawla2002smote}
+Nitesh~V. Chawla, Kevin~W. Bowyer, Lawrence~O. Hall, and W.~Philip Kegelmeyer.
+\newblock {SMOTE}: Synthetic minority over-sampling technique.
+\newblock \emph{Journal of Artificial Intelligence Research}, 16:\penalty0
+  321--357, 2002.
+
+\bibitem[Chen and Guestrin(2016)]{chen2016xgboost}
+Tianqi Chen and Carlos Guestrin.
+\newblock {XGBoost}: A scalable tree boosting system.
+\newblock In \emph{Proceedings of the 22nd ACM SIGKDD International Conference
+  on Knowledge Discovery and Data Mining}, pages 785--794. ACM, 2016.
+
+\bibitem[Jolliffe(2002)]{jolliffe2002pca}
+Ian~T. Jolliffe.
+\newblock \emph{Principal Component Analysis}.
+\newblock Springer, New York, 2nd edition, 2002.
+
+\bibitem[Kimball and Ross(2013)]{kimball2013}
+Ralph Kimball and Margy Ross.
+\newblock \emph{The Data Warehouse Toolkit: The Definitive Guide to Dimensional
+  Modeling}.
+\newblock Wiley, Indianapolis, IN, 3rd edition, 2013.
+
+\bibitem[Liu et~al.(2008)Liu, Ting, and Zhou]{liu2008isolation}
+Fei~Tony Liu, Kai~Ming Ting, and Zhi-Hua Zhou.
+\newblock Isolation forest.
+\newblock In \emph{2008 Eighth IEEE International Conference on Data Mining},
+  pages 413--422. IEEE, 2008.
+
+\bibitem[{Microsoft}(2026)]{powerbidocs}
+{Microsoft}.
+\newblock {Power BI} documentation.
+\newblock \url{https://learn.microsoft.com/power-bi/}, 2026.
+\newblock Consult\'e en 2026.
+
+\bibitem[Pedregosa et~al.(2011)Pedregosa, Varoquaux, Gramfort, Michel, Thirion,
+  Grisel, Blondel, Prettenhofer, Weiss, Dubourg, Vanderplas, Passos,
+  Cournapeau, Brucher, Perrot, and Duchesnay]{pedregosa2011sklearn}
+Fabian Pedregosa, Ga{\"e}l Varoquaux, Alexandre Gramfort, Vincent Michel,
+  Bertrand Thirion, Olivier Grisel, Mathieu Blondel, Peter Prettenhofer, Ron
+  Weiss, Vincent Dubourg, Jake Vanderplas, Alexandre Passos, David Cournapeau,
+  Matthieu Brucher, Matthieu Perrot, and {\'E}douard Duchesnay.
+\newblock Scikit-learn: Machine learning in {P}ython.
+\newblock \emph{Journal of Machine Learning Research}, 12:\penalty0 2825--2830,
+  2011.
+
+\bibitem[{Streamlit Inc.}(2026)]{streamlitdocs}
+{Streamlit Inc.}
+\newblock Streamlit documentation.
+\newblock \url{https://docs.streamlit.io/}, 2026.
+\newblock Consult\'e en 2026.
+
+\bibitem[{Talend / Qlik}(2026)]{talenddocs}
+{Talend / Qlik}.
+\newblock Talend open studio documentation.
+\newblock \url{https://www.talend.com/}, 2026.
+\newblock Consult\'e en 2026.
+
+\end{thebibliography}
