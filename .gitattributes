@@ -1,2 +1,6 @@
-data/dim_*.xlsx filter=lfs diff=lfs merge=lfs -text
-data/data_churn.csv filter=lfs diff=lfs merge=lfs -text
+# Si data/ devait un jour être versionné via Git LFS (déconseillé, voir data/README.md
+# et la règle de confidentialité de 00_documentation/2_description_donnees.md) :
+*.csv filter=lfs diff=lfs merge=lfs -text
+*.txt filter=lfs diff=lfs merge=lfs -text
+*.xlsx filter=lfs diff=lfs merge=lfs -text
+*.pbix filter=lfs diff=lfs merge=lfs -text
