@@ -43,10 +43,10 @@ REFERENCE_DATE = pd.Timestamp("2026-06-24")
 # Connexion PostgreSQL — lue depuis l'environnement, jamais codée en clair
 # ---------------------------------------------------------------------------
 DB_USER = os.environ.get("DB_USER", "postgres")
-DB_PASSWORD = os.environ.get("DB_PASSWORD", "566504")
+DB_PASSWORD = os.environ.get("DB_PASSWORD", "postgress")
 DB_HOST = os.environ.get("DB_HOST", "localhost")
 DB_PORT = os.environ.get("DB_PORT", "5432")
-DB_NAME = os.environ.get("DB_NAME", "PIProject")
+DB_NAME = os.environ.get("DB_NAME", "PIProject2")
 
 CONNECTION_STRING = (
     f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
