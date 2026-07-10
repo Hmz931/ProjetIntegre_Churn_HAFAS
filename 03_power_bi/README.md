@@ -1,5 +1,5 @@
-# Documentation des KPI — Analyse du Churn Bancaire
-### Banque ESPRIT — Modèle DAX / Power BI
+# Documentation des KPI - Analyse du Churn Bancaire
+### Banque ESPRIT - Modèle DAX / Power BI
 
 ---
 
