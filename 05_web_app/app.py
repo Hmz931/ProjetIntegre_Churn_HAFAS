@@ -4,7 +4,7 @@ Application Streamlit — Suite Churn Client
 Pages :
   - Accueil          : écran de chargement corporate + résumé du dataset
   - Prédiction        : formulaire de scoring individuel (modèle XGBoost + SMOTE)
-  - Dashboard KPI      : indicateurs métier interactifs (basés sur data/churn.csv)
+  - Dashboard KPI      : indicateurs métier interactifs (basés sur data/DW.csv)
   - À propos de nous  : présentation du projet / équipe
 
 Respecte le flow de traitement du notebook machine_learning2.ipynb :
@@ -61,8 +61,8 @@ def charger_artefacts():
 
 @st.cache_data
 def charger_donnees():
-    """Charge le CSV utilisé pour le dashboard KPI (indépendant du modèle)."""
-    return pd.read_csv("../data/DW.csv")
+    """Charge le DW nettoyé (grain client) utilisé pour le dashboard KPI."""
+    return pd.read_csv("data/DW.csv")
 
 
 # ----------------------------------------------------------------------
@@ -161,14 +161,14 @@ if page == "🏠 Accueil":
     col1, col2, col3 = st.columns(3)
     if data_ok:
         with col1:
-            st.metric("Comptes dans le jeu de données", f"{len(df_data):,}".replace(",", " "))
+            st.metric("Clients dans le jeu de données", f"{len(df_data):,}".replace(",", " "))
         with col2:
             taux_churn = df_data["churn"].mean() * 100 if "churn" in df_data.columns else None
-            st.metric("Taux de churn global des comptes", f"{taux_churn:.1f}%" if taux_churn is not None else "N/A")
+            st.metric("Taux de churn global", f"{taux_churn:.1f}%" if taux_churn is not None else "N/A")
         with col3:
             st.metric("Variables disponibles", len(df_data.columns))
     else:
-        st.warning(f"Impossible de charger `data/churn.csv` pour afficher le résumé : {erreur_data}")
+        st.warning(f"Impossible de charger `data/DW.csv` pour afficher le résumé : {erreur_data}")
 
     st.divider()
     st.subheader("Ce que vous pouvez faire ici")
@@ -271,40 +271,57 @@ elif page == "📊 Dashboard KPI":
     st.title("📊 Dashboard KPI — Analyse du Churn")
 
     if not data_ok:
-        st.error(f"Impossible de charger `data/churn.csv` : {erreur_data}")
+        st.error(f"Impossible de charger `data/DW.csv` : {erreur_data}")
         st.stop()
 
     if "churn" not in df_data.columns:
-        st.error("La colonne `churn` est introuvable dans `data/churn.csv` — impossible de calculer les KPIs.")
+        st.error("La colonne `churn` est introuvable dans `data/DW.csv` — impossible de calculer les KPIs.")
         st.stop()
 
     # --- Filtres interactifs ---
-    with st.expander("🔍 Filtres", expanded=False):
-        colf1, colf2 = st.columns(2)
-        with colf1:
-            if "PARTYCLASS" in df_data.columns:
-                segments = st.multiselect(
-                    "Segment client (PARTYCLASS)",
-                    options=sorted(df_data["PARTYCLASS"].dropna().unique().tolist()),
-                    default=None,
-                )
-            else:
-                segments = []
-        with colf2:
-            if "LOB" in df_data.columns:
-                lobs = st.multiselect(
-                    "Ligne de métier (LOB)",
-                    options=sorted(df_data["LOB"].dropna().unique().tolist()),
-                    default=None,
-                )
-            else:
-                lobs = []
+    st.subheader("🔍 Filtres")
+    colf1, colf2, colf3 = st.columns(3)
+    with colf1:
+        if "PARTYCLASS" in df_data.columns:
+            segments = st.multiselect(
+                "Segment client (PARTYCLASS)",
+                options=sorted(df_data["PARTYCLASS"].dropna().unique().tolist()),
+            )
+        else:
+            segments = []
+    with colf2:
+        if "LOB" in df_data.columns:
+            lobs = st.multiselect(
+                "Ligne de métier (LOB)",
+                options=sorted(df_data["LOB"].dropna().unique().tolist()),
+            )
+        else:
+            lobs = []
+    with colf3:
+        if "SCORE_KYC" in df_data.columns:
+            kycs = st.multiselect(
+                "Score KYC",
+                options=sorted(df_data["SCORE_KYC"].dropna().unique().tolist()),
+            )
+        else:
+            kycs = []
 
     df_filtre = df_data.copy()
     if segments:
         df_filtre = df_filtre[df_filtre["PARTYCLASS"].isin(segments)]
     if lobs:
         df_filtre = df_filtre[df_filtre["LOB"].isin(lobs)]
+    if kycs:
+        df_filtre = df_filtre[df_filtre["SCORE_KYC"].isin(kycs)]
+
+    st.caption(f"{len(df_filtre):,}".replace(",", " ") + " lignes après filtrage (sur "
+               + f"{len(df_data):,}".replace(",", " ") + " au total)")
+
+    if df_filtre.empty:
+        st.warning("Aucune ligne ne correspond à ces filtres — élargissez votre sélection.")
+        st.stop()
+
+    st.divider()
 
     # --- KPI 01 : Taux de churn global ---
     st.subheader("KPI 01 — Taux de churn global")
@@ -315,7 +332,7 @@ elif page == "📊 Dashboard KPI":
         taux = df_filtre["churn"].mean() * 100
         st.metric("Taux de churn", f"{taux:.1f}%")
     with col3:
-        st.metric("Comptes non-churnés", f"{(1 - df_filtre['churn'].mean()) * 100:.1f}%")
+        st.metric("Clients non-churnés", f"{(1 - df_filtre['churn'].mean()) * 100:.1f}%")
 
     st.divider()
 
@@ -405,6 +422,103 @@ elif page == "📊 Dashboard KPI":
         )
         st.plotly_chart(fig, use_container_width=True)
 
+    st.divider()
+
+    # --- KPI 04 : Solde moyen et médian par statut de compte ---
+    if "ACCOUNT_STATUS" in df_filtre.columns and "acct_balance" in df_filtre.columns:
+        st.subheader("KPI 04 — Solde moyen et médian par statut de compte")
+        kpi_solde = (
+            df_filtre.groupby("ACCOUNT_STATUS")["acct_balance"]
+            .agg(solde_moyen="mean", solde_median="median")
+            .reset_index()
+        )
+        fig = px.bar(
+            kpi_solde.melt(id_vars="ACCOUNT_STATUS", value_vars=["solde_moyen", "solde_median"]),
+            x="ACCOUNT_STATUS", y="value", color="variable", barmode="group",
+            labels={"value": "Solde", "ACCOUNT_STATUS": "Statut du compte", "variable": ""},
+        )
+        st.plotly_chart(fig, use_container_width=True)
+    else:
+        st.caption("KPI 04 (solde par statut de compte) non disponible : colonnes "
+                   "`ACCOUNT_STATUS`/`acct_balance` absentes de ce jeu de données.")
+
+    # --- KPI 07 : Taux de churn par ligne de produit ---
+    if "PRODUCT_LINE" in df_filtre.columns:
+        st.subheader("KPI 07 — Taux de churn par ligne de produit")
+        kpi_produit = (
+            df_filtre.groupby("PRODUCT_LINE")["churn"]
+            .agg(nb_evenements="count", taux_churn_pct="mean")
+            .reset_index()
+        )
+        kpi_produit["taux_churn_pct"] = (kpi_produit["taux_churn_pct"] * 100).round(1)
+        kpi_produit = kpi_produit.sort_values("taux_churn_pct", ascending=False)
+        fig = px.bar(
+            kpi_produit, x="PRODUCT_LINE", y="taux_churn_pct",
+            text="taux_churn_pct", color="taux_churn_pct",
+            color_continuous_scale=[COULEUR_OK, COULEUR_ALERTE],
+            labels={"taux_churn_pct": "Taux de churn (%)", "PRODUCT_LINE": "Ligne de produit"},
+        )
+        fig.update_traces(texttemplate="%{text}%", textposition="outside")
+        st.plotly_chart(fig, use_container_width=True)
+    else:
+        st.caption("KPI 07 (churn par ligne de produit) non disponible : colonne "
+                   "`PRODUCT_LINE` absente de ce jeu de données (probablement perdue lors "
+                   "de l'agrégation au grain client).")
+
+    # --- KPI 09 : Taux de churn par secteur d'activité (hors code 9000) ---
+    if "INDUSTRY_LABEL" in df_filtre.columns or "INDUSTRY" in df_filtre.columns:
+        st.subheader("KPI 09 — Taux de churn par secteur d'activité (hors 'Other')")
+        col_industrie = "INDUSTRY_LABEL" if "INDUSTRY_LABEL" in df_filtre.columns else "INDUSTRY"
+        df_industrie = df_filtre[df_filtre["INDUSTRY"] != "9000"] if "INDUSTRY" in df_filtre.columns else df_filtre
+
+        kpi_industrie = (
+            df_industrie.groupby(col_industrie)["churn"]
+            .agg(nb_evenements="count", taux_churn_pct="mean")
+            .reset_index()
+        )
+        kpi_industrie = kpi_industrie[kpi_industrie["nb_evenements"] >= 30]
+        kpi_industrie["taux_churn_pct"] = (kpi_industrie["taux_churn_pct"] * 100).round(1)
+        kpi_industrie = kpi_industrie.sort_values("taux_churn_pct", ascending=False).head(15)
+
+        fig = px.bar(
+            kpi_industrie, x=col_industrie, y="taux_churn_pct",
+            text="taux_churn_pct", color="taux_churn_pct",
+            color_continuous_scale=[COULEUR_OK, COULEUR_ALERTE],
+            labels={"taux_churn_pct": "Taux de churn (%)", col_industrie: "Secteur d'activité"},
+        )
+        fig.update_traces(texttemplate="%{text}%", textposition="outside")
+        fig.update_layout(xaxis_tickangle=-45)
+        st.plotly_chart(fig, use_container_width=True)
+    else:
+        st.caption("KPI 09 (churn par secteur d'activité) non disponible : colonne "
+                   "`INDUSTRY`/`INDUSTRY_LABEL` absente de ce jeu de données.")
+
+    # --- KPI 10 : Répartition volontaire / involontaire des clôtures ---
+    if "closure_reason" in df_filtre.columns or "is_voluntary" in df_filtre.columns:
+        st.subheader("KPI 10 — Répartition volontaire / involontaire des clôtures")
+        df_clotures = df_filtre[df_filtre["churn"] == 1].copy()
+        if "is_voluntary" in df_clotures.columns:
+            df_clotures["type_cloture"] = df_clotures["is_voluntary"].map(
+                {True: "Volontaire", False: "Involontaire"}
+            ).fillna("Non classifié")
+        else:
+            df_clotures["type_cloture"] = df_clotures["closure_reason"].fillna("Non classifié")
+
+        kpi_cloture = df_clotures["type_cloture"].value_counts().reset_index()
+        kpi_cloture.columns = ["type_cloture", "nb_comptes_fermes"]
+
+        fig = px.pie(
+            kpi_cloture, names="type_cloture", values="nb_comptes_fermes",
+            color="type_cloture",
+            color_discrete_map={"Volontaire": COULEUR_OK, "Involontaire": COULEUR_ALERTE,
+                                 "Non classifié": "#CCCCCC"},
+        )
+        st.plotly_chart(fig, use_container_width=True)
+    else:
+        st.caption("KPI 10 (type de clôture) non disponible : colonnes "
+                   "`closure_reason`/`is_voluntary` absentes de ce jeu de données "
+                   "(probablement perdues lors de l'agrégation au grain client).")
+
     with st.expander("Voir les données filtrées (aperçu)"):
         st.dataframe(df_filtre.head(200))
 
@@ -415,9 +529,12 @@ elif page == "ℹ️ À propos de nous":
     st.title("ℹ️ À propos de ce projet")
     st.markdown(
         f"""
-        <div style="background-color:#F0F4F8; padding:25px; border-radius:10px; border-left:6px solid black;">
-        <h3 style="color:black;">Projet Intégré Prédiction du Churn Bancaire</h3>
-        <p>
+        <div style="background-color:#F0F4F8; padding:25px; border-radius:10px;
+                    border-left:6px solid {COULEUR_PRIMAIRE};">
+        <h3 style="color:{COULEUR_PRIMAIRE}; margin-top:0;">
+            Projet Intégré — Prédiction du Churn Bancaire
+        </h3>
+        <p style="color:#1A1A2E; font-size:16px; line-height:1.6; margin-bottom:0;">
         Ce projet a été réalisé dans le cadre d'un projet intégré universitaire. Il couvre l'ensemble
         de la chaîne data : construction d'un entrepôt de données (Data Warehouse), pipeline ETL,
         modélisation supervisée (prédiction du churn) et non supervisée (segmentation client),
@@ -452,7 +569,7 @@ elif page == "ℹ️ À propos de nous":
 
     st.divider()
     st.subheader("Équipe")
-    st.write("Aisha Soltani , Eya Bahrouni , Hamza Bouguerra, Fares Messedi")
+    st.write("Complétez cette section avec les noms des membres de l'équipe et leurs rôles respectifs.")
     # Exemple de structure à adapter :
     # col_a, col_b, col_c = st.columns(3)
     # with col_a:
