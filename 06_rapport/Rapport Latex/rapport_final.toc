@@ -34,23 +34,24 @@
 \contentsline {section}{\numberline {6.3}Fuite de donn\'ees d\'etect\'ee et corrig\'ee}{18}{section.6.3}%
 \contentsline {section}{\numberline {6.4}Pr\'etraitement}{19}{section.6.4}%
 \contentsline {section}{\numberline {6.5}Mod\`eles compar\'es et r\'esultats}{19}{section.6.5}%
-\contentsline {section}{\numberline {6.6}Limitations assum\'ees}{19}{section.6.6}%
-\contentsline {chapter}{\numberline {7}Analyse non supervis\'ee - segmentation et anomalies}{20}{chapter.7}%
-\contentsline {section}{\numberline {7.1}Motivation et grain}{20}{section.7.1}%
-\contentsline {section}{\numberline {7.2}Analyse en composantes principales (ACP)}{20}{section.7.2}%
-\contentsline {section}{\numberline {7.3}Segmentation par K-means}{20}{section.7.3}%
-\contentsline {section}{\numberline {7.4}D\'etection d'anomalies par Isolation Forest}{21}{section.7.4}%
-\contentsline {section}{\numberline {7.5}Usage envisag\'e}{21}{section.7.5}%
-\contentsline {chapter}{\numberline {8}Interface web et d\'eploiement}{22}{chapter.8}%
-\contentsline {section}{\numberline {8.1}Application Streamlit}{22}{section.8.1}%
-\contentsline {section}{\numberline {8.2}D\'eploiement}{22}{section.8.2}%
-\contentsline {section}{\numberline {8.3}Point de vigilance}{22}{section.8.3}%
-\contentsline {chapter}{\numberline {9}Limites et perspectives}{23}{chapter.9}%
-\contentsline {section}{\numberline {9.1}Limites connues}{23}{section.9.1}%
-\contentsline {section}{\numberline {9.2}Perspectives}{23}{section.9.2}%
-\contentsline {chapter}{\numberline {10}Conclusion}{24}{chapter.10}%
-\contentsline {chapter}{Bibliographie}{25}{chapter*.13}%
-\contentsline {chapter}{\numberline {A}Annexes}{26}{chapter.A}%
-\contentsline {section}{\numberline {A.1}Glossaire}{26}{section.A.1}%
-\contentsline {section}{\numberline {A.2}Structure du d\'ep\^ot de code}{26}{section.A.2}%
-\contentsline {section}{\numberline {A.3}Extrait de code - contr\^ole de nullit\'e structurelle de \texttt {date\_key}}{26}{section.A.3}%
+\contentsline {section}{\numberline {6.6}Crit\`ere de s\'election~: pourquoi le recall prime sur ce probl\`eme}{19}{section.6.6}%
+\contentsline {section}{\numberline {6.7}Limitations assum\'ees}{20}{section.6.7}%
+\contentsline {chapter}{\numberline {7}Analyse non supervis\'ee - segmentation et anomalies}{21}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Motivation et grain}{21}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Analyse en composantes principales (ACP)}{21}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Segmentation par K-means}{21}{section.7.3}%
+\contentsline {section}{\numberline {7.4}D\'etection d'anomalies par Isolation Forest}{22}{section.7.4}%
+\contentsline {section}{\numberline {7.5}Usage envisag\'e}{22}{section.7.5}%
+\contentsline {chapter}{\numberline {8}Interface web et d\'eploiement}{23}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Application Streamlit}{23}{section.8.1}%
+\contentsline {section}{\numberline {8.2}D\'eploiement}{23}{section.8.2}%
+\contentsline {section}{\numberline {8.3}Point de vigilance}{23}{section.8.3}%
+\contentsline {chapter}{\numberline {9}Limites et perspectives}{24}{chapter.9}%
+\contentsline {section}{\numberline {9.1}Limites connues}{24}{section.9.1}%
+\contentsline {section}{\numberline {9.2}Perspectives}{24}{section.9.2}%
+\contentsline {chapter}{\numberline {10}Conclusion}{25}{chapter.10}%
+\contentsline {chapter}{Bibliographie}{26}{chapter*.13}%
+\contentsline {chapter}{\numberline {A}Annexes}{27}{chapter.A}%
+\contentsline {section}{\numberline {A.1}Glossaire}{27}{section.A.1}%
+\contentsline {section}{\numberline {A.2}Structure du d\'ep\^ot de code}{27}{section.A.2}%
+\contentsline {section}{\numberline {A.3}Extrait de code - contr\^ole de nullit\'e structurelle de \texttt {date\_key}}{27}{section.A.3}%

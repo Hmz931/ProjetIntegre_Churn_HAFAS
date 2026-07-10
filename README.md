@@ -18,8 +18,8 @@
 | `03_power_bi/` | ✅ 3 dashboards |
 | `04_machine_learning/` | ✅ Fait|
 | `05_web_app/` | ✅ Fait (`app.py` réservé à la racine) |
-| `06_rapport/` | ⬜ Non rédigé |
-| `07_presentation/` | ⬜ Non préparée |
+| `06_rapport/` | ✅ rédigé |
+| `07_presentation/` | ✅ Préparée |
 
 ## Par où commencer
 

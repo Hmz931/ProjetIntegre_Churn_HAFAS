@@ -77,7 +77,6 @@
 \@writefile{lof}{\contentsline {figure}{\numberline {5.4}{\ignorespaces D\'ecomposition de la Value-at-Risk du churn par segment, produit et score KYC}}{17}{figure.caption.10}\protected@file@percent }
 \newlabel{fig:powerbi-var}{{5.4}{17}{D\'ecomposition de la Value-at-Risk du churn par segment, produit et score KYC}{figure.caption.10}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {5.5}Limites de cette partie}{17}{section.5.5}\protected@file@percent }
-\citation{chawla2002smote}
 \@writefile{toc}{\contentsline {chapter}{\numberline {6}Mod\'elisation supervis\'ee - pr\'ediction du churn}{18}{chapter.6}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
@@ -86,46 +85,48 @@
 \@writefile{toc}{\contentsline {section}{\numberline {6.2}S\'election des variables}{18}{section.6.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {6.3}Fuite de donn\'ees d\'etect\'ee et corrig\'ee}{18}{section.6.3}\protected@file@percent }
 \newlabel{sec:leakage}{{6.3}{18}{Fuite de donn\'ees d\'etect\'ee et corrig\'ee}{section.6.3}{}}
+\citation{chawla2002smote}
 \citation{breiman2001random}
 \citation{chen2016xgboost}
 \@writefile{toc}{\contentsline {section}{\numberline {6.4}Pr\'etraitement}{19}{section.6.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {6.5}Mod\`eles compar\'es et r\'esultats}{19}{section.6.5}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {6.1}{\ignorespaces Comparaison des mod\`eles de classification (grain compte, apr\`es correction de la fuite de donn\'ees)}}{19}{table.caption.11}\protected@file@percent }
-\newlabel{tab:ml-results}{{6.1}{19}{Comparaison des mod\`eles de classification (grain compte, apr\`es correction de la fuite de donn\'ees)}{table.caption.11}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {6.6}Limitations assum\'ees}{19}{section.6.6}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {6.1}{\ignorespaces Comparaison des mod\`eles de classification (grain client, 10 configurations avec/sans SMOTE)}}{19}{table.caption.11}\protected@file@percent }
+\newlabel{tab:ml-results}{{6.1}{19}{Comparaison des mod\`eles de classification (grain client, 10 configurations avec/sans SMOTE)}{table.caption.11}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6.6}Crit\`ere de s\'election~: pourquoi le recall prime sur ce probl\`eme}{19}{section.6.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6.7}Limitations assum\'ees}{20}{section.6.7}\protected@file@percent }
 \citation{jolliffe2002pca}
+\@writefile{toc}{\contentsline {chapter}{\numberline {7}Analyse non supervis\'ee - segmentation et anomalies}{21}{chapter.7}\protected@file@percent }
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\newlabel{ch:datamining}{{7}{21}{Analyse non supervis\'ee - segmentation et anomalies}{chapter.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7.1}Motivation et grain}{21}{section.7.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7.2}Analyse en composantes principales (ACP)}{21}{section.7.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7.3}Segmentation par K-means}{21}{section.7.3}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {7.1}{\ignorespaces Segments K-means ($k=4$, grain client, $n=319\,129$)}}{21}{table.caption.12}\protected@file@percent }
+\newlabel{tab:kmeans}{{7.1}{21}{Segments K-means ($k=4$, grain client, $n=319\,129$)}{table.caption.12}{}}
 \citation{liu2008isolation}
-\@writefile{toc}{\contentsline {chapter}{\numberline {7}Analyse non supervis\'ee - segmentation et anomalies}{20}{chapter.7}\protected@file@percent }
-\@writefile{lof}{\addvspace {10\p@ }}
-\@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{ch:datamining}{{7}{20}{Analyse non supervis\'ee - segmentation et anomalies}{chapter.7}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {7.1}Motivation et grain}{20}{section.7.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {7.2}Analyse en composantes principales (ACP)}{20}{section.7.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {7.3}Segmentation par K-means}{20}{section.7.3}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {7.1}{\ignorespaces Segments K-means ($k=4$, grain client, $n=319\,129$)}}{20}{table.caption.12}\protected@file@percent }
-\newlabel{tab:kmeans}{{7.1}{20}{Segments K-means ($k=4$, grain client, $n=319\,129$)}{table.caption.12}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {7.4}D\'etection d'anomalies par Isolation Forest}{21}{section.7.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {7.5}Usage envisag\'e}{21}{section.7.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7.4}D\'etection d'anomalies par Isolation Forest}{22}{section.7.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7.5}Usage envisag\'e}{22}{section.7.5}\protected@file@percent }
 \citation{streamlitdocs}
-\@writefile{toc}{\contentsline {chapter}{\numberline {8}Interface web et d\'eploiement}{22}{chapter.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {8}Interface web et d\'eploiement}{23}{chapter.8}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{ch:webapp}{{8}{22}{Interface web et d\'eploiement}{chapter.8}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {8.1}Application Streamlit}{22}{section.8.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {8.2}D\'eploiement}{22}{section.8.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {8.3}Point de vigilance}{22}{section.8.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {9}Limites et perspectives}{23}{chapter.9}\protected@file@percent }
+\newlabel{ch:webapp}{{8}{23}{Interface web et d\'eploiement}{chapter.8}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {8.1}Application Streamlit}{23}{section.8.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {8.2}D\'eploiement}{23}{section.8.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {8.3}Point de vigilance}{23}{section.8.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {9}Limites et perspectives}{24}{chapter.9}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{ch:limites}{{9}{23}{Limites et perspectives}{chapter.9}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {9.1}Limites connues}{23}{section.9.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {9.2}Perspectives}{23}{section.9.2}\protected@file@percent }
+\newlabel{ch:limites}{{9}{24}{Limites et perspectives}{chapter.9}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {9.1}Limites connues}{24}{section.9.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {9.2}Perspectives}{24}{section.9.2}\protected@file@percent }
 \bibstyle{plainnat}
 \bibdata{references}
-\@writefile{toc}{\contentsline {chapter}{\numberline {10}Conclusion}{24}{chapter.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {10}Conclusion}{25}{chapter.10}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{ch:conclusion}{{10}{24}{Conclusion}{chapter.10}{}}
+\newlabel{ch:conclusion}{{10}{25}{Conclusion}{chapter.10}{}}
 \bibcite{benbrik2026cours}{{1}{2026}{{Ben~Brik}}{{}}}
 \bibcite{breiman2001random}{{2}{2001}{{Breiman}}{{}}}
 \bibcite{chawla2002smote}{{3}{2002}{{Chawla et~al.}}{{Chawla, Bowyer, Hall, and Kegelmeyer}}}
@@ -137,11 +138,11 @@
 \bibcite{pedregosa2011sklearn}{{9}{2011}{{Pedregosa et~al.}}{{Pedregosa, Varoquaux, Gramfort, Michel, Thirion, Grisel, Blondel, Prettenhofer, Weiss, Dubourg, Vanderplas, Passos, Cournapeau, Brucher, Perrot, and Duchesnay}}}
 \bibcite{streamlitdocs}{{10}{2026}{{Streamlit Inc.}}{{}}}
 \bibcite{talenddocs}{{11}{2026}{{Talend / Qlik}}{{}}}
-\@writefile{toc}{\contentsline {chapter}{Bibliographie}{25}{chapter*.13}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {A}Annexes}{26}{chapter.A}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{Bibliographie}{26}{chapter*.13}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {A}Annexes}{27}{chapter.A}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {A.1}Glossaire}{26}{section.A.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {A.2}Structure du d\'ep\^ot de code}{26}{section.A.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {A.3}Extrait de code - contr\^ole de nullit\'e structurelle de \texttt  {date\_key}}{26}{section.A.3}\protected@file@percent }
-\gdef \@abspage@last{29}
+\@writefile{toc}{\contentsline {section}{\numberline {A.1}Glossaire}{27}{section.A.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {A.2}Structure du d\'ep\^ot de code}{27}{section.A.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {A.3}Extrait de code - contr\^ole de nullit\'e structurelle de \texttt  {date\_key}}{27}{section.A.3}\protected@file@percent }
+\gdef \@abspage@last{30}
