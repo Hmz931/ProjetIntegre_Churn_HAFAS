@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.7.7)  7 JUL 2026 16:53
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.7.7)  10 JUL 2026 19:35
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**./rapport_finalv1.tex
-(rapport_finalv1.tex
+**./rapport_final.tex
+(rapport_final.tex
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-04-28>
 (C:\Users\hamza\AppData\Local\Programs\MiKTeX\tex/latex/base\report.cls
@@ -637,11 +637,11 @@ LaTeX Font Info:    Trying to load font information for T1+lmr on input line 80
 (C:\Users\hamza\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmr.fd
 File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-(rapport_finalv1.aux
+(rapport_final.aux
 Package babel Info: 'french' activates 'french' shorthands.
 (babel)             Reported on input line 12.
 )
-\openout1 = `rapport_finalv1.aux'.
+\openout1 = `rapport_final.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 80.
 LaTeX Font Info:    ... okay on input line 80.
@@ -732,13 +732,13 @@ fg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
 Package hyperref Info: Link coloring ON on input line 80.
- (rapport_finalv1.out) (rapport_finalv1.out)
+ (rapport_final.out) (rapport_final.out)
 \@outlinefile=\write4
-\openout4 = `rapport_finalv1.out'.
+\openout4 = `rapport_final.out'.
 
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
-<images/esb_logo.png, id=223, 501.875pt x 501.875pt>
+<images/esb_logo.png, id=227, 501.875pt x 501.875pt>
 File: images/esb_logo.png Graphic file (type png)
 <use images/esb_logo.png>
 Package pdftex.def Info: images/esb_logo.png  used on input line 89.
@@ -781,11 +781,16 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 a/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc}{C:/Users/hamza/Ap
 pData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc} <./images/esb_log
 o.png>] [2]
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 1
+47.
+ (C:\Users\hamza\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmtt.fd
+File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.164 \chapter
+l.166 \chapter
               *{Abstract} [1
 
 ]
@@ -793,59 +798,52 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.193 \newpage
+l.197 \newpage
                [2
 
-] (rapport_finalv1.toc
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 2
-2.
-
-(C:\Users\hamza\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmtt.fd
-File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-) [3
+] (rapport_final.toc [3
 
 ])
 \tf@toc=\write5
-\openout5 = `rapport_finalv1.toc'.
+\openout5 = `rapport_final.toc'.
 
 Package babel Info: 'french' activates 'french' shorthands.
-(babel)             Reported on input line 195.
-
-[4]
+(babel)             Reported on input line 199.
+ [4]
 Chapitre 1.
 [5
 
 ]
-Overfull \hbox (27.1803pt too wide) in paragraph at lines 261--265
+Overfull \hbox (27.1803pt too wide) in paragraph at lines 265--269
 []\T1/lmr/bx/n/10.95 Dépôt mo-dèle fourni par l'en-ca-drant \T1/lmr/m/n/10.95 :
  [][]$\T1/lmtt/m/n/10.95 https : / / github . com / Aymenbenbrik / ProjetIntegr
 e$[][]\T1/lmr/m/n/10.95 ,
  []
 
 
-Overfull \hbox (41.27162pt too wide) in paragraph at lines 261--265
+Overfull \hbox (41.27162pt too wide) in paragraph at lines 265--269
 \T1/lmr/m/n/10.95 uti-lisé comme point de dé-part pour la struc-ture de dos-sie
 rs et la do-cu-men-ta-tion (\T1/lmtt/m/n/10.95 00_documentation/\T1/lmr/m/n/10.
 95 ). 
  []
 
-<images/trello_board.png, id=329, 1156.32pt x 595.62524pt>
+<images/trello_board.png, id=334, 1156.32pt x 595.62524pt>
 File: images/trello_board.png Graphic file (type png)
 <use images/trello_board.png>
-Package pdftex.def Info: images/trello_board.png  used on input line 295.
+Package pdftex.def Info: images/trello_board.png  used on input line 299.
 (pdftex.def)             Requested size: 443.29234pt x 228.3394pt.
 
 LaTeX Font Warning: Font shape `T1/lmr/bx/sc' undefined
-(Font)              using `T1/lmr/bx/n' instead on input line 296.
+(Font)              using `T1/lmr/bx/n' instead on input line 300.
 
 [6 <./images/trello_board.png>] [7]
 Chapitre 2.
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10.95> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 371.
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 375.
 [8
 
 ]
-Overfull \hbox (59.82605pt too wide) in paragraph at lines 385--388
+Overfull \hbox (59.82605pt too wide) in paragraph at lines 389--392
 []\T1/lmr/m/n/10.95 Ces constats ont di-rec-te-ment guidé les règles de net-toy
 age im-plé-men-tées dans \T1/lmtt/m/n/10.95 01_etl/etl_pipeline/clean.py\T1/lmr
 /m/n/10.95 ,
@@ -859,134 +857,136 @@ Chapitre 3.
 ] [11]
 Chapitre 4.
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <12> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 523.
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 527.
 [12
 
 ]
-<images/postgres_dw.png, id=414, 1154.51324pt x 684.156pt>
+<images/postgres_dw.png, id=419, 1154.51324pt x 684.156pt>
 File: images/postgres_dw.png Graphic file (type png)
 <use images/postgres_dw.png>
-Package pdftex.def Info: images/postgres_dw.png  used on input line 545.
+Package pdftex.def Info: images/postgres_dw.png  used on input line 549.
 (pdftex.def)             Requested size: 429.29416pt x 254.39691pt.
 
-Underfull \hbox (badness 1478) in paragraph at lines 584--584
+Underfull \hbox (badness 1478) in paragraph at lines 588--588
 []|\T1/lmr/m/n/10 Jobs sto-ckés en XML pro-prié-taire
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 584--584
+Underfull \hbox (badness 10000) in paragraph at lines 588--588
 []|\T1/lmr/m/n/10 Isolation di-recte d'une co-
  []
 
 
-Underfull \hbox (badness 1755) in paragraph at lines 584--584
+Underfull \hbox (badness 1755) in paragraph at lines 588--588
 \T1/lmr/m/n/10 lonne/condition en une com-mande
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 584--584
+Underfull \hbox (badness 10000) in paragraph at lines 588--588
 []|\T1/lmr/m/n/10 Couverture na-tive
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 584--584
+Underfull \hbox (badness 10000) in paragraph at lines 588--588
 \T1/lmr/m/n/10 CSV/Excel/PostgreSQL via pan-
  []
 
 [13 <./images/postgres_dw.png>] [14]
 Chapitre 5.
-<images/powerbi_overview.png, id=432, 999.85545pt x 578.16pt>
+<images/powerbi_overview.png, id=437, 999.85545pt x 578.16pt>
 File: images/powerbi_overview.png Graphic file (type png)
 <use images/powerbi_overview.png>
-Package pdftex.def Info: images/powerbi_overview.png  used on input line 618.
+Package pdftex.def Info: images/powerbi_overview.png  used on input line 622.
 (pdftex.def)             Requested size: 443.29234pt x 256.33202pt.
-<images/powerbi_profil.png, id=433, 999.85545pt x 578.16pt>
+<images/powerbi_profil.png, id=438, 999.85545pt x 578.16pt>
 File: images/powerbi_profil.png Graphic file (type png)
 <use images/powerbi_profil.png>
-Package pdftex.def Info: images/powerbi_profil.png  used on input line 634.
+Package pdftex.def Info: images/powerbi_profil.png  used on input line 638.
 (pdftex.def)             Requested size: 443.29234pt x 256.33202pt.
 [15
 
  <./images/powerbi_overview.png (PNG copy)>]
-<images/powerbi_produits.png, id=440, 999.85545pt x 578.16pt>
+<images/powerbi_produits.png, id=445, 999.85545pt x 578.16pt>
 File: images/powerbi_produits.png Graphic file (type png)
 <use images/powerbi_produits.png>
-Package pdftex.def Info: images/powerbi_produits.png  used on input line 650.
+Package pdftex.def Info: images/powerbi_produits.png  used on input line 654.
 (pdftex.def)             Requested size: 443.29234pt x 256.33202pt.
  [16 <./images/powerbi_profil.png (PNG copy)> <./images/powerbi_produits.png (P
 NG copy)>]
-<images/powerbi_var.png, id=447, 999.85545pt x 578.16pt>
+<images/powerbi_var.png, id=452, 999.85545pt x 578.16pt>
 File: images/powerbi_var.png Graphic file (type png)
 <use images/powerbi_var.png>
-Package pdftex.def Info: images/powerbi_var.png  used on input line 667.
+Package pdftex.def Info: images/powerbi_var.png  used on input line 671.
 (pdftex.def)             Requested size: 443.29234pt x 256.33202pt.
  [17{C:/Users/hamza/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm.enc}
 {C:/Users/hamza/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathit.enc}
  <./images/powerbi_var.png (PNG copy)>]
 Chapitre 6.
 
-Overfull \hbox (6.70958pt too wide) in paragraph at lines 684--684
+Overfull \hbox (6.70958pt too wide) in paragraph at lines 688--688
 |\T1/lmr/bx/n/24.88 Modélisation su-per-vi-sée - pré-dic-tion du
  []
 
 
-Overfull \hbox (26.45541pt too wide) in paragraph at lines 697--705
-\T1/lmr/m/n/10.95 (\T1/lmtt/m/n/10.95 ACCOUNT_TYPE_DESC\T1/lmr/m/n/10.95 , quas
-i iden-tique à \T1/lmtt/m/n/10.95 ACCOUNT_CATEGORY\T1/lmr/m/n/10.95 ) et va-ria
-bles quasi constantes (\T1/lmtt/m/n/10.95 NATIONALITY\T1/lmr/m/n/10.95 ,
+Overfull \hbox (2.49062pt too wide) in paragraph at lines 716--722
+[]\T1/lmr/m/n/10.95 Le jeu de va-riables re-tenu compte 6 va-riables nu-mé-riqu
+es (\T1/lmtt/m/n/10.95 salary\T1/lmr/m/n/10.95 , \T1/lmtt/m/n/10.95 amount_tota
+l\T1/lmr/m/n/10.95 , \T1/lmtt/m/n/10.95 fixedrate_mean\T1/lmr/m/n/10.95 ,
+ []
+
+
+Overfull \hbox (3.95113pt too wide) in paragraph at lines 716--722
+\T1/lmtt/m/n/10.95 nb_produits\T1/lmr/m/n/10.95 , \T1/lmtt/m/n/10.95 age\T1/lmr
+/m/n/10.95 , \T1/lmtt/m/n/10.95 salary_missing\T1/lmr/m/n/10.95 ) et 8 va-riabl
+es ca-té-go-rielles (\T1/lmtt/m/n/10.95 MARITAL_STATUS\T1/lmr/m/n/10.95 , \T1/l
+mtt/m/n/10.95 NATURE_CLIENT\T1/lmr/m/n/10.95 ,
  []
 
 [18
 
 ]
-Overfull \hbox (26.40361pt too wide) in paragraph at lines 759--771
- [][] 
+Overfull \hbox (6.06635pt too wide) in paragraph at lines 749--755
+[]\T1/lmr/m/n/10.95 Cette dé-marche --- vé-ri-fier sys-té-ma-ti-que-ment le tau
+x de churn condi-tion-nel à la pré-sence/absence
  []
 
-[19]
+[19] [20]
 Chapitre 7.
 
-Overfull \hbox (0.4217pt too wide) in paragraph at lines 812--820
+Overfull \hbox (0.4217pt too wide) in paragraph at lines 881--889
 \T1/lmr/m/n/10.95 stan-dar-di-sées puis pro-je-tées par ACP ([][]Jol-liffe[][],
  [][]2002[][]), après trans-for-ma-tion lo-ga-rith-mique de \T1/lmtt/m/n/10.95 
 salary
  []
 
 
-Overfull \hbox (24.63669pt too wide) in paragraph at lines 828--838
+Overfull \hbox (24.63669pt too wide) in paragraph at lines 897--907
  [][] 
  []
 
-[20
+[21
 
-] [21]
+] [22]
 Chapitre 8.
-
-Overfull \hbox (25.75906pt too wide) in paragraph at lines 897--903
-\T1/lmr/m/n/10.95 du no-te-book de mo-dé-li-sa-tion change de grain ou de jeu d
-e va-riables, \T1/lmtt/m/n/10.95 model.pkl \T1/lmr/m/n/10.95 et \T1/lmtt/m/n/10
-.95 feature_columns.pkl
- []
-
-[22
-
-]
-Chapitre 9.
 [23
 
 ]
-Chapitre 10.
-(rapport_finalv1.bbl [24
+Chapitre 9.
+[24
 
-]) [25
+]
+Chapitre 10.
+(rapport_final.bbl [25
+
+]) [26
 
 ]
 Annexe A.
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <14.4> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 1033.
-[26
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 1105.
+[27
 
-] [27] (rapport_finalv1.aux)
+] [28] (rapport_final.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-04-28>
@@ -995,17 +995,17 @@ L3 programming layer <2026-04-28>
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-Package rerunfilecheck Info: File `rapport_finalv1.out' has not changed.
-(rerunfilecheck)             Checksum: BA5D4BB02EB09FF04A003B370BC5B710;10428.
+Package rerunfilecheck Info: File `rapport_final.out' has not changed.
+(rerunfilecheck)             Checksum: AEFABFFBBED35BB04D169D7A7FCC1CED;10837.
  ) 
 Here is how much of TeX's memory you used:
- 16665 strings out of 467683
- 281414 string characters out of 5414722
- 736761 words of memory out of 5000000
- 45355 multiletter control sequences out of 15000+600000
+ 16668 strings out of 467683
+ 281385 string characters out of 5414722
+ 738743 words of memory out of 5000000
+ 45356 multiletter control sequences out of 15000+600000
  693152 words of font info for 82 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 76i,14n,83p,1206b,714s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 76i,14n,83p,1204b,714s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/hamza/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx10.pf
 b><C:/Users/hamza/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx12.pf
 b><C:/Users/hamza/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmex10.pf
@@ -1018,9 +1018,9 @@ b><C:/Users/hamza/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr10.pfb
 <C:/Users/hamza/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb>
 <C:/Users/hamza/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtti10.pfb
 >
-Output written on rapport_finalv1.pdf (29 pages, 3303341 bytes).
+Output written on rapport_final.pdf (30 pages, 3309896 bytes).
 PDF statistics:
- 608 PDF objects out of 1000 (max. 8388607)
- 117 named destinations out of 1000 (max. 500000)
- 476 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 621 PDF objects out of 1000 (max. 8388607)
+ 119 named destinations out of 1000 (max. 500000)
+ 484 words of extra memory for PDF output out of 10000 (max. 10000000)
 

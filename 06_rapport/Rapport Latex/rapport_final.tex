@@ -138,13 +138,15 @@ individuel.
 Le pipeline ETL a \'et\'e valid\'e par un script de coh\'erence automatis\'e (32
 tests) et a permis de d\'ecouvrir et corriger 7~anomalies r\'eelles dans les
 donn\'ees sources (r\`egles de gestion incompl\`etes, pollution de dates
-d'extraction, valeurs aberrantes). Six mod\`eles de classification ont \'et\'e
-compar\'es au grain compte (410~587 comptes, taux de churn 36,1\%)~; le mod\`ele
-retenu, XGBoost, atteint un F1-score de 0,9465 et une AUC-ROC de 0,9823, apr\`es
-qu'une fuite de donn\'ees (li\'ee \`a un indicateur de valeur manquante
-repr\'esentant 89,5\% du poids de d\'ecision du mod\`ele) a \'et\'e d\'etect\'ee et
-corrig\'ee en cours de construction. Une analyse compl\'ementaire non supervis\'ee
-au grain client (319~129 clients) identifie quatre segments par K-means et
+d'extraction, valeurs aberrantes). Six mod\`eles de classification (test\'es
+avec et sans SMOTE, soit dix configurations) ont \'et\'e compar\'es au grain
+client (319~129 clients, taux de churn 36\%)~; le mod\`ele retenu, XGBoost avec
+SMOTE, est s\'electionn\'e sur la base du \textbf{recall} (84,92\%, le meilleur
+parmi les mod\`eles \`a pr\'ecision exploitable), avec un F1-score de 88,24\% et
+une AUC-ROC de 94,64\%, apr\`es qu'une fuite de donn\'ees
+(\texttt{acct\_balance}, manquante pour 100\% des clients churn\'es) a \'et\'e
+d\'etect\'ee et exclue en cours de construction. Une analyse compl\'ementaire non
+supervis\'ee, au m\^eme grain client, identifie quatre segments par K-means et
 3~192 clients anormaux par Isolation Forest.
 
 Les r\'esultats sont restitu\'es \`a travers trois tableaux de bord Power BI
@@ -173,13 +175,15 @@ detection), and a Streamlit web application for individual scoring.
 
 The ETL pipeline was validated through an automated coherence-testing script
 (32 tests) and surfaced 7 genuine data-quality issues that were investigated
-and corrected. Six classification models were compared at account grain
-(410,587 accounts, 36.1\% churn rate); the selected model, XGBoost, reaches an
-F1-score of 0.9465 and a ROC-AUC of 0.9823, after a data-leakage issue (a
-missing-value indicator responsible for 89.5\% of the model's decision weight)
-was detected and fixed during development. A complementary unsupervised
-analysis at client grain (319,129 clients) identifies four K-means segments
-and 3,192 anomalous clients via Isolation Forest.
+and corrected. Six classification models (tested with and without SMOTE, ten
+configurations in total) were compared at client grain (319,129 clients,
+36\% churn rate); the selected model, XGBoost with SMOTE, is chosen on the
+basis of \textbf{recall} (84.92\%, the best among models with usable
+precision), reaching an F1-score of 88.24\% and a ROC-AUC of 94.64\%, after a
+data-leakage issue (\texttt{acct\_balance}, missing for 100\% of churned
+clients) was detected and excluded during development. A complementary
+unsupervised analysis, at the same client grain, identifies four K-means
+segments and 3,192 anomalous clients via Isolation Forest.
 
 Results are presented through three Power BI dashboards and a Streamlit
 application enabling real-time individual scoring. This report also documents
@@ -686,108 +690,163 @@ indicateur en l'\'etat.
 
 \section{Grain et p\'erim\`etre}
 
-Le mod\`ele supervis\'e est entra\^in\'e au grain \textbf{compte}
-(\texttt{ACCOUNT\_NO}), conform\'ement \`a la d\'efinition officielle du churn
-(section~\ref{ch:donnees}). La table de faits (grain \'ev\'enement) est agr\'eg\'ee
-par compte avant tout entra\^inement, ce qui ram\`ene le jeu de donn\'ees \`a
-410~587 lignes.
+Le mod\`ele supervis\'e est entra\^in\'e au grain \textbf{client}
+(\texttt{client\_key}), avec la d\'efinition du churn agr\'eg\'ee par
+\texttt{min} (churn = 1 si et seulement si tous les comptes du client sont
+ferm\'es --- voir section~\ref{ch:donnees}). La table de faits est agr\'eg\'ee par
+client avant tout entra\^inement, ramenant le jeu de donn\'ees \`a
+\textbf{319~129 lignes}, pour un taux de churn de \textbf{36\%} --- un
+d\'es\'equilibre de classes mod\'er\'e plut\^ot qu'extr\^eme.
 
 \section{S\'election des variables}
 
 Chaque variable exclue l'a \'et\'e pour une raison document\'ee individuellement
-dans le notebook~: variables de fuite \'evidentes
-(\texttt{ACCT\_CLOSE\_DATE}, \texttt{CLOSURE\_REASON}, \texttt{ACCOUNT\_STATUS}
-- directement d\'eriv\'ees du label), identifiants
-(\texttt{account\_key}, \texttt{client\_key}, \texttt{branch\_key}), variables
-redondantes (\texttt{ACCOUNT\_TYPE\_DESC}, quasi identique \`a
-\texttt{ACCOUNT\_CATEGORY}) et variables quasi constantes
-(\texttt{NATIONALITY}, \texttt{RESIDENCE}, $>$93\% de la m\^eme valeur).
+dans le notebook~:
+
+\begin{itemize}
+\item \texttt{client\_key} --- identifiant, sans valeur pr\'edictive.
+\item \texttt{acct\_balance} --- \textbf{fuite d'information} (voir
+      section~\ref{sec:leakage}).
+\item \texttt{nb\_comptes} --- redondante avec \texttt{nb\_produits}
+      (99,1\% de correspondance entre les deux colonnes).
+\item \texttt{NATIONALITY}, \texttt{RESIDENCE} --- quasi constantes
+      (majoritairement \texttt{"TN"}).
+\end{itemize}
+
+Le jeu de variables retenu compte 6 variables num\'eriques
+(\texttt{salary}, \texttt{amount\_total}, \texttt{fixedrate\_mean},
+\texttt{nb\_produits}, \texttt{age}, \texttt{salary\_missing}) et 8 variables
+cat\'egorielles (\texttt{MARITAL\_STATUS}, \texttt{NATURE\_CLIENT},
+\texttt{PARTYCLASS}, \texttt{LOB}, \texttt{INDUSTRY}, \texttt{SCORE\_KYC},
+\texttt{COMPLETED\_FILE}, \texttt{BRANCH}).
 
 \section{Fuite de donn\'ees d\'etect\'ee et corrig\'ee}
 \label{sec:leakage}
 
-Un point m\'ethodologique important m\'erite d'\^etre document\'e en d\'etail~: une
-premi\`ere version du notebook cr\'eait des indicateurs binaires de valeur
-manquante (\texttt{\_missing}) pour chaque variable pr\'esentant des absences.
-L'analyse d'importance des variables d'XGBoost a alors r\'ev\'el\'e que
-\texttt{acct\_tenure\_days\_missing} repr\'esentait \textbf{89,5\%} du poids de
-d\'ecision du mod\`ele - un chiffre anormalement \'elev\'e ayant d\'eclench\'e une
-v\'erification.
+La v\'erification syst\'ematique du taux de churn selon qu'une variable est
+renseign\'ee ou non (m\'ethode appliqu\'ee \`a chaque colonne pr\'esentant des
+valeurs manquantes) a r\'ev\'el\'e un cas de fuite \'evident~: parmi les clients
+pour lesquels \texttt{acct\_balance} est manquant, \textbf{100\%} ont churn\'e.
+Une variable parfaitement corr\'el\'ee \`a l'absence de donn\'ee pour la classe
+positive n'est pas un signal m\'etier exploitable en production (elle
+encoderait, de fait, le label lui-m\^eme) --- \texttt{acct\_balance} a donc
+\'et\'e exclue des variables explicatives.
 
-La cause a \'et\'e confirm\'ee~: la correction de nettoyage \'evoqu\'ee \`a la
-section~\ref{sec:bugs-etl} (neutralisation d'\texttt{ACCT\_OPENING\_DATE}
-lorsqu'elle est post\'erieure \`a \texttt{ACCT\_CLOSE\_DATE}) ne s'applique qu'\`a
-des comptes d\'ej\`a ferm\'es - rendant la nullit\'e r\'esultante de
-\texttt{acct\_tenure\_days} un quasi-proxy parfait du label \`a pr\'edire (100\%
-des comptes concern\'es sont \texttt{Closed}, v\'erifi\'e empiriquement), et non un
-signal m\'etier l\'egitime.
+\`A l'inverse, la m\^eme v\'erification sur \texttt{salary} n'a pas r\'ev\'el\'e de
+fuite~: le taux de churn est proche, que le salaire soit renseign\'e
+(35,57\%) ou manquant (37,69\%). \texttt{salary\_missing} a donc \'et\'e
+conserv\'e comme indicateur binaire l\'egitime, et \texttt{salary} lui-m\^eme
+imput\'e par la m\'ediane plut\^ot que laiss\'e manquant.
 
-Les indicateurs \texttt{acct\_tenure\_days\_missing} et
-\texttt{acct\_balance\_missing} ont donc \'et\'e retir\'es des variables
-explicatives. \texttt{salary\_missing} a \'et\'e conserv\'e apr\`es v\'erification
-qu'il s'agit bien d'un signal l\'egitime (taux de churn quasi identique,
-$\sim$37\% vs $\sim$35\%, que le salaire soit renseign\'e ou non). Le F1-score
-d'XGBoost n'a quasiment pas chang\'e apr\`es correction (0,9465 contre 0,9460
-avant), confirmant que le mod\`ele disposait d\'ej\`a de signaux l\'egitimes
-suffisants.
+Une v\'erification similaire sur \texttt{COMPLETED\_FILE} (dossier client
+complet ou non) confirme un signal l\'egitime et fort~: 49,6\% de churn parmi
+les dossiers incomplets contre 22,5\% parmi les dossiers complets --- une
+corr\'elation plausible d'un point de vue m\'etier (un dossier incomplet
+signale un engagement client plus faible), retenue comme variable
+explicative.
 
 \begin{quote}
-Cette d\'ecouverte illustre une le\c{c}on m\'ethodologique g\'en\'erale~: toujours
-v\'erifier qu'une performance apparente n'est pas un artefact du pipeline de
-nettoyage amont avant de faire confiance \`a un r\'esultat de mod\'elisation.
+Cette d\'emarche --- v\'erifier syst\'ematiquement le taux de churn conditionnel
+\`a la pr\'esence/absence de chaque variable avant de l'utiliser --- est la
+m\^eme discipline que celle qui avait permis de d\'etecter une fuite li\'ee \`a
+l'anciennet\'e du compte lors d'une it\'eration ant\'erieure du mod\`ele au grain
+compte~: elle est d\'esormais syst\'ematique dans le pipeline de mod\'elisation
+de l'\'equipe.
 \end{quote}
 
 \section{Pr\'etraitement}
 
-Les variables cat\'egorielles \`a faible cardinalit\'e sont encod\'ees en
-\emph{one-hot}~; \texttt{ACCOUNT\_CATEGORY} (149 valeurs) et
-\texttt{BRANCH} (141 valeurs) sont encod\'ees par fr\'equence, ajust\'ee
-uniquement sur l'ensemble d'entra\^inement pour \'eviter toute fuite. Le jeu de
-donn\'ees est s\'epar\'e 80/20 de mani\`ere stratifi\'ee, et SMOTE~\citep{chawla2002smote}
-est appliqu\'e uniquement sur l'ensemble d'entra\^inement pour r\'e\'equilibrer les
-classes.
+Les variables cat\'egorielles \`a faible cardinalit\'e (\texttt{MARITAL\_STATUS},
+\texttt{NATURE\_CLIENT}, \texttt{PARTYCLASS}, \texttt{SCORE\_KYC},
+\texttt{COMPLETED\_FILE}, \texttt{LOB}) sont encod\'ees en \emph{one-hot}~;
+\texttt{BRANCH} (141 valeurs) et \texttt{INDUSTRY} (637 valeurs) sont
+encod\'ees par fr\'equence, ajust\'ee uniquement sur l'ensemble d'entra\^inement
+pour \'eviter toute fuite. Le jeu de donn\'ees est s\'epar\'e 80/20 de mani\`ere
+stratifi\'ee, et SMOTE~\citep{chawla2002smote} est appliqu\'e uniquement sur
+l'ensemble d'entra\^inement pour r\'e\'equilibrer les classes --- chaque mod\`ele
+est test\'e \`a la fois avec et sans SMOTE, soit dix configurations au total.
 
 \section{Mod\`eles compar\'es et r\'esultats}
 
-Six mod\`eles ont \'et\'e entra\^in\'es et compar\'es~: r\'egression logistique
-(r\'ef\'erence), K plus proches voisins (KNN), arbre de d\'ecision, for\^et
-al\'eatoire~\citep{breiman2001random}, machine \`a vecteurs de support (SVM) et
-XGBoost~\citep{chen2016xgboost}.
+Six mod\`eles ont \'et\'e entra\^in\'es~: r\'egression logistique, K plus proches
+voisins (KNN), arbre de d\'ecision, for\^et al\'eatoire~\citep{breiman2001random},
+machine \`a vecteurs de support (SVM) et
+XGBoost~\citep{chen2016xgboost}, chacun avec et sans SMOTE.
 
 \begin{table}[H]
 \centering
-\begin{tabular}{lccl}
+\small
+\begin{tabular}{lccccc}
 \toprule
-\textbf{Mod\`ele} & \textbf{F1-score} & \textbf{ROC-AUC} & \textbf{Remarques} \\
+\textbf{Mod\`ele} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-score} & \textbf{ROC-AUC} & \textbf{Temps (s)} \\
 \midrule
-R\'egression logistique & 0,6963 & 0,8015 & Mod\`ele de r\'ef\'erence \\
-KNN & $\sim$0,87 & $\sim$0,95 & \'Evalu\'e sur 10K lignes de test (co\^ut de pr\'ediction) \\
-Arbre de d\'ecision & 0,9438 & 0,9758 & \texttt{max\_depth=10} \\
-For\^et al\'eatoire & 0,9329 & 0,9772 & 200 arbres \\
-SVM & $\sim$0,70 & $\sim$0,85 & 20K lignes d'entra\^inement (co\^ut noyau RBF) \\
-\textbf{XGBoost} & \textbf{0,9465} & \textbf{0,9823} & \textbf{Mod\`ele retenu} \\
+\textbf{XGBoost (avec SMOTE)} & 91,82\% & \textbf{84,92\%} & \textbf{88,24\%} & 94,64\% & 2,84 \\
+XGBoost (sans SMOTE) & 92,23\% & 84,48\% & 88,19\% & \textbf{94,74\%} & 1,97 \\
+Random Forest (avec SMOTE) & 91,67\% & 84,83\% & 88,12\% & 94,37\% & 24,08 \\
+Random Forest (sans SMOTE) & 92,35\% & 84,30\% & 88,14\% & 94,40\% & 16,15 \\
+Arbre de d\'ecision (sans SMOTE) & 92,17\% & 84,14\% & 87,97\% & 94,16\% & 1,22 \\
+KNN (avec SMOTE) & 55,20\% & 68,83\% & 61,27\% & 74,30\% & 1,23 \\
+SVM (avec SMOTE, sous-\'ech.) & 53,99\% & 67,77\% & 60,10\% & 71,04\% & 437,22 \\
+KNN (sans SMOTE) & 62,98\% & 53,11\% & 57,63\% & 75,01\% & 0,06 \\
+Arbre de d\'ecision (avec SMOTE) & 37,41\% & 98,19\% & 54,17\% & 49,77\% & 1,76 \\
+SVM (sans SMOTE, sous-\'ech.) & 60,00\% & 47,89\% & 53,27\% & 70,57\% & 115,38 \\
 \bottomrule
 \end{tabular}
-\caption{Comparaison des mod\`eles de classification (grain compte, apr\`es correction de la fuite de donn\'ees)}
+\caption{Comparaison des mod\`eles de classification (grain client, 10 configurations avec/sans SMOTE)}
 \label{tab:ml-results}
 \end{table}
 
-L'effet de SMOTE s'est av\'er\'e marginal sur ce jeu de donn\'ees - le
-d\'es\'equilibre des classes (64\%/36\%) \'etant mod\'er\'e plut\^ot qu'extr\^eme.
-L'analyse d'importance des variables d'XGBoost (apr\`es correction de la fuite)
-identifie \texttt{amount\_total} (40,5\%), \texttt{nb\_produits} (27,2\%) et
-\texttt{acct\_tenure\_days} (16,4\%) comme les trois variables les plus
-influentes.
+L'analyse d'importance des variables d'XGBoost identifie \texttt{amount\_total}
+comme largement dominante (52,7\% du poids de d\'ecision), loin devant
+\texttt{nb\_produits} (7,7\%), \texttt{COMPLETED\_FILE = YES} (6,1\%),
+\texttt{LOB} = 30 (4,7\%) et \texttt{fixedrate\_mean} (3,5\%).
+
+\section{Crit\`ere de s\'election~: pourquoi le recall prime sur ce probl\`eme}
+
+Le F1-score et le ROC-AUC restent de bons indicateurs globaux, mais le crit\`ere
+d\'ecisif retenu par l'\'equipe pour arbitrer entre les mod\`eles les plus
+performants a \'et\'e le \textbf{recall} (rappel) de la classe churn, pour une
+raison m\'etier pr\'ecise~: dans un contexte de r\'etention bancaire, le co\^ut
+d'un \textbf{faux n\'egatif} (un client qui va r\'eellement churner mais que le
+mod\`ele classe comme fid\`ele) est structurellement plus \'elev\'e que celui d'un
+\textbf{faux positif} (un client contact\'e inutilement par un conseiller). Ne
+pas d\'etecter un churn r\'eel signifie perdre le client sans avoir tent\'e la
+moindre action de r\'etention~; contacter \`a tort un client fid\`ele co\^ute au
+pire un appel superflu.
+
+Sur ce crit\`ere, \textbf{XGBoost avec SMOTE obtient le meilleur recall parmi
+les mod\`eles dont les autres m\'etriques restent exploitables} (84,92\%),
+devant Random Forest avec SMOTE (84,83\%) et XGBoost sans SMOTE (84,48\%).
+L'\'ecart avec ces deux challengers est faible en valeur absolue, mais XGBoost
+avec SMOTE l'emporte \'egalement sur le F1-score (88,24\%, le meilleur du
+comparatif) et reste tr\`es rapide \`a entra\^iner (2,84 secondes) --- un
+compromis recall/pr\'ecision/temps d'ex\'ecution qui n'est domin\'e sur aucun
+axe par un autre mod\`ele non d\'eg\'en\'er\'e.
+
+\begin{quote}
+\textbf{Point de vigilance m\'ethodologique}~: le recall le plus \'elev\'e du
+comparatif appartient en r\'ealit\'e \`a l'arbre de d\'ecision avec SMOTE
+(98,19\%) --- mais ce chiffre est trompeur. Sa pr\'ecision s'effondre \`a
+37,41\% et son ROC-AUC tombe \`a 49,77\%, soit \`a peine mieux que le hasard~:
+ce mod\`ele maximise le recall en pr\'edisant le churn de mani\`ere quasi
+syst\'ematique, ce qui n'a aucune valeur op\'erationnelle (une \'equipe de
+r\'etention ne peut pas contacter la quasi-totalit\'e de la base client). Ce
+r\'esultat illustre pourquoi le recall doit toujours \^etre lu conjointement
+avec la pr\'ecision et le ROC-AUC, jamais isol\'ement.
+\end{quote}
+
+\textbf{Mod\`ele retenu~: XGBoost avec SMOTE.} Il maximise le recall parmi les
+mod\`eles dont la pr\'ecision reste exploitable, tout en offrant le meilleur
+F1-score et un temps d'entra\^inement compatible avec un r\'eentra\^inement
+r\'egulier en production.
 
 \section{Limitations assum\'ees}
 
-KNN est \'evalu\'e sur un sous-\'echantillon de 10~000 comptes de test (la
-pr\'ediction sur le jeu complet prend $\sim$150 secondes, jug\'e
-disproportionn\'e). SVM est entra\^in\'e sur un sous-\'echantillon de 20~000
-comptes (sur 328~469 disponibles), le co\^ut du noyau RBF rendant
-l'entra\^inement sur le jeu complet trop co\^uteux. Ces limitations sont
-document\'ees explicitement dans le notebook pour \'eviter toute comparaison \`a
-armes rigoureusement \'egales entre ces deux mod\`eles et les quatre autres.
+KNN et SVM sont entra\^in\'es/\'evalu\'es sur un sous-\'echantillon (co\^ut de
+pr\'ediction et noyau RBF trop \'elev\'es sur 319~129 clients dans le temps
+imparti), ce qui limite la comparabilit\'e stricte de leurs r\'esultats avec les
+quatre autres mod\`eles, entra\^in\'es sur le jeu complet. Cette limitation est
+document\'ee explicitement dans le notebook.
 
 % ================================================================
 % CHAPITRE 7 - DATAMINING NON SUPERVISE
@@ -806,6 +865,16 @@ le \textbf{client} (et non le compte), avec la d\'efinition du churn agr\'eg\'ee
 par \texttt{min} (churn = 1 si et seulement si tous les comptes du client sont
 ferm\'es - voir section~\ref{ch:donnees}). Ce grain regroupe
 \textbf{319~129 clients}.
+
+Ce grain est d\'esormais le m\^eme que celui utilis\'e au chapitre~\ref{ch:ml}
+pour la mod\'elisation supervis\'ee~: les deux analyses partagent la m\^eme
+population et la m\^eme d\'efinition du churn, mais r\'epondent \`a des questions
+diff\'erentes et compl\'ementaires. La mod\'elisation supervis\'ee r\'epond \`a
+\emph{qui} va probablement churner (une pr\'ediction individuelle, exploit\'ee
+par l'application de scoring du chapitre~\ref{ch:webapp}). L'analyse non
+supervis\'ee ci-dessous r\'epond \`a \emph{quels profils} coexistent dans la
+base et \emph{quels clients} s'\'ecartent de tout profil standard --- une
+lecture structurelle que la seule pr\'ediction binaire ne fournit pas.
 
 \section{Analyse en composantes principales (ACP)}
 
@@ -873,10 +942,10 @@ de churn produit par le mod\`ele supervis\'e.
 
 \section{Application Streamlit}
 
-Le mod\`ele retenu (XGBoost, section~\ref{ch:ml}) est restitu\'e via une
-application Streamlit~\citep{streamlitdocs} \`a quatre pages~: un \'ecran
+Le mod\`ele retenu (XGBoost avec SMOTE, chapitre~\ref{ch:ml}) est restitu\'e via
+une application Streamlit~\citep{streamlitdocs} \`a quatre pages~: un \'ecran
 d'accueil pr\'esentant un r\'esum\'e du jeu de donn\'ees, un formulaire de
-scoring individuel (saisie des caract\'eristiques d'un client/compte et
+scoring individuel (saisie des caract\'eristiques d'un client et
 pr\'ediction en temps r\'eel), un tableau de bord KPI interactif, et une page
 de pr\'esentation de l'\'equipe.
 
@@ -894,9 +963,12 @@ d\'eploiement final (voir \texttt{05\_web\_app/README.md} du d\'ep\^ot).}
 
 \section{Point de vigilance}
 
-Le mod\`ele charg\'e est li\'e aux features d\'efinies au grain \textbf{compte}
-(chapitre~\ref{ch:ml}). Si une \'evolution future du notebook de mod\'elisation
-change de grain ou de jeu de variables, \texttt{model.pkl} et
+Le mod\`ele charg\'e est li\'e aux features d\'efinies au grain \textbf{client}
+(chapitre~\ref{ch:ml})~: le formulaire de scoring doit donc saisir des
+caract\'eristiques agr\'eg\'ees au niveau client (ex.\ \texttt{nb\_produits},
+\texttt{amount\_total} cumul\'e), pas des caract\'eristiques d'un compte isol\'e.
+Si une \'evolution future du notebook de mod\'elisation change \`a nouveau de
+grain ou de jeu de variables, \texttt{model.pkl} et
 \texttt{feature\_columns.pkl} doivent \^etre r\'eg\'en\'er\'es et remplac\'es dans
 \texttt{05\_web\_app/models/}, faute de quoi l'application produirait des
 pr\'edictions incoh\'erentes sans erreur explicite.
@@ -970,13 +1042,13 @@ r\'esolue en cours de mod\'elisation, et une analyse non supervis\'ee compl\'eme
 apportant un \'eclairage diff\'erent (segmentation, anomalies) que la seule
 pr\'ediction binaire du churn ne pouvait fournir.
 
-Le mod\`ele XGBoost retenu (F1 = 0,9465, AUC-ROC = 0,9823) offre une base
-solide pour un d\'eploiement op\'erationnel, sous r\'eserve des am\'eliorations
-identifi\'ees (validation crois\'ee, explicabilit\'e par instance). Les tableaux
-de bord Power BI et l'application Streamlit compl\`etent le dispositif en
-rendant les r\'esultats accessibles \`a un public m\'etier non technique, condition
-n\'ecessaire \`a l'adoption effective d'un tel outil par les \'equipes de
-r\'etention client.
+Le mod\`ele XGBoost avec SMOTE retenu (recall = 84,92\%, F1 = 88,24\%,
+AUC-ROC = 94,64\%) offre une base solide pour un d\'eploiement op\'erationnel,
+sous r\'eserve des am\'eliorations identifi\'ees (validation crois\'ee,
+explicabilit\'e par instance). Les tableaux de bord Power BI et l'application
+Streamlit compl\`etent le dispositif en rendant les r\'esultats accessibles \`a
+un public m\'etier non technique, condition n\'ecessaire \`a l'adoption effective
+d'un tel outil par les \'equipes de r\'etention client.
 
 \bigskip
 \begin{flushright}
